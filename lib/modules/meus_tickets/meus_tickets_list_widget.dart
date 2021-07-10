@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_passeios/meus_passeios_controller.dart';
+import 'package:tutor/modules/meus_tickets/meus_tickets_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
-class MeusPasseiosListWidget extends StatefulWidget {
-  const MeusPasseiosListWidget({Key? key}) : super(key: key);
+class MeusTicketsListWidget extends StatefulWidget {
+  const MeusTicketsListWidget({Key? key}) : super(key: key);
 
   @override
-  _MeusPasseiosListWidgetState createState() => _MeusPasseiosListWidgetState();
+  _MeusTicketsListWidgetState createState() => _MeusTicketsListWidgetState();
 }
 
-class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
-  final controller = MeusPasseiosController();
+class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
+  final controller = MeusTicketsController();
+  final formatCurrency = NumberFormat.currency(locale: "pt_BR");
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
               ),
             );
           } else if (state == StateEnum.success) {
-            if (controller.passeios.isNotEmpty) {
+            if (controller.tickets.isNotEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -60,21 +62,39 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                       await controller.buscarTodos();
                     },
                     child: ListView.builder(
-                      itemCount: controller.passeios.length,
+                      itemCount: controller.tickets.length,
                       itemBuilder: (context, index) {
-                        Color colorStatus;
-                        String status = controller.passeios[index].status!;
+                        IconData icon;
+                        String formaPg =
+                            controller.tickets[index].formaDePagamento!.tipo!;
 
-                        if (status == "Aceito") {
-                          colorStatus = Colors.green;
-                        } else if (status == "Recusado") {
-                          colorStatus = AppColors.delete;
-                        } else if (status == "Espera") {
-                          colorStatus = Colors.amber;
-                        } else if (status == "Andamento") {
-                          colorStatus = Colors.teal;
+                        if (formaPg == "1") {
+                          icon = Icons.picture_as_pdf_outlined;
+                        } else if (formaPg == "2") {
+                          icon = Icons.credit_card_outlined;
+                        } else if (formaPg == "3") {
+                          icon = Icons.request_quote_outlined;
+                        } else if (formaPg == "6") {
+                          icon = Icons.qr_code_2_outlined;
                         } else {
-                          colorStatus = Colors.black;
+                          icon = Icons.article_outlined;
+                        }
+
+                        String statusPg = "";
+                        Color statusColor = AppColors.stroke;
+                        if (controller.tickets[index].pendente!) {
+                          statusPg = "Aguardando pagamento";
+                          statusColor = Colors.amber;
+                        }
+
+                        if (controller.tickets[index].cancelado!) {
+                          statusPg = "Cancelado";
+                          statusColor = AppColors.delete;
+                        }
+
+                        if (controller.tickets[index].pago!) {
+                          statusPg = "Pagamento concluído";
+                          statusColor = AppColors.success;
                         }
 
                         return Column(
@@ -82,39 +102,29 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
+                                onTap: () async {
+                                  String _url =
+                                      controller.tickets[index].faturaUrl!;
+                                  await canLaunch(_url)
+                                      ? await launch(_url)
+                                      : throw 'Could not launch $_url';
+                                },
                                 title: Text(
-                                  controller.passeios[index].dogwalker!.nome!,
-                                  style: TextStyles.buttonBoldGray,
+                                  controller
+                                      .tickets[index].formaDePagamento!.nome!,
+                                  style: TextStyles.titleListTile,
                                 ),
-                                subtitle: Text.rich(
-                                  TextSpan(
-                                    text: "#" +
-                                        controller.passeios[index].id!
-                                            .toString() +
-                                        " | ",
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            controller.passeios[index].status!,
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                subtitle: Text(
+                                    '${formatCurrency.format(controller.tickets[index].total!)} | $statusPg'),
                                 leading: Container(
                                   height: 40,
                                   width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage(AppImages.logoDogwalker),
-                                    ),
-                                  ),
+                                  child: Icon(icon),
                                 ),
                                 trailing: Text(
                                   controller.getFormatedDate(
-                                      controller.passeios[index].datahora!),
-                                  textDirection: TextDirection.rtl,
+                                      controller.tickets[index].criado!),
+                                  textAlign: TextAlign.right,
                                 ),
                               ),
                             ),
@@ -126,7 +136,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                                 width: size.width,
                                 height: 5,
                                 decoration: BoxDecoration(
-                                  color: colorStatus,
+                                  color: statusColor,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(50),
                                     bottomRight: Radius.circular(50),
@@ -147,7 +157,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                 child: Center(
                   child: Container(
                     child: Text(
-                      "Você ainda não solicitou nenhum passeio.",
+                      "Você ainda não adquiriu nenhum ticket.",
                       style: TextStyles.input,
                     ),
                   ),

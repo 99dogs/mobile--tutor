@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/agenda/agenda_page.dart';
 import 'package:tutor/modules/dogwalkers/dogwalkers_page.dart';
+import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
+import 'package:tutor/modules/meu_perfil/meu_perfil_page.dart';
 import 'package:tutor/modules/meus_caes/cadastrar_cao_page.dart';
 import 'package:tutor/modules/meus_caes/meus_caes_page.dart';
 import 'package:tutor/modules/meus_passeios/meus_passeios_page.dart';
@@ -27,9 +29,11 @@ class MyApp extends StatelessWidget {
       initialRoute: "/splash",
       home: AgendaPage(),
       routes: {
-        "/agenda": (context) => AgendaPage(),
         "/splash": (context) => SplashPage(),
         "/login": (context) => LoginPage(),
+        "/home": (context) => HomePage(),
+        "/perfil": (context) => MeuPerfilPage(),
+        "/agenda": (context) => AgendaPage(),
         "/passeio/list": (context) => MeusPasseiosPage(),
         "/cachorro/list": (context) => MeusCaesPage(),
         "/cachorro/add": (context) => CadastrarCaoPage(),

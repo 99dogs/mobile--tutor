@@ -33,7 +33,7 @@ class TitlePageWidget extends StatelessWidget {
               child: Row(
                 children: [
                   AnimatedCard(
-                    duration: Duration(milliseconds: 650),
+                    duration: Duration(milliseconds: 300),
                     direction: AnimatedCardDirection.left,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 20),

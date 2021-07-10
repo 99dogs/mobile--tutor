@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/splash/splash_controller.dart';
+import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 
 class SplashPage extends StatelessWidget {
@@ -8,8 +8,8 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = SplashController();
-    controller.delay(context);
+    final loginController = LoginController();
+    loginController.validarSessao(context);
 
     return Scaffold(
       body: Center(
@@ -26,9 +26,7 @@ class SplashPage extends StatelessWidget {
                 ),
                 TypewriterAnimatedText('DOGS'),
               ],
-              onTap: () {
-                print("Tap Event");
-              },
+              onTap: () {},
             ),
           ),
         ),

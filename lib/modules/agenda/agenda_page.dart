@@ -14,31 +14,14 @@ class AgendaPage extends StatefulWidget {
 class _AgendaPageState extends State<AgendaPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: CustomAppBarWidget(),
+    return Container(
+      child: Column(
+        children: [
+          TitlePageWidget(
+            title: "Agenda",
+          ),
+        ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            TitlePageWidget(
-              title: "Agenda",
-            ),
-            TableCalendar(
-              availableCalendarFormats: const {
-                CalendarFormat.month: 'mês',
-                CalendarFormat.week: 'semana',
-                CalendarFormat.twoWeeks: '2 semanas',
-              },
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: DateTime.now(),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBarWidget(paginaAtual: 3),
     );
   }
 }

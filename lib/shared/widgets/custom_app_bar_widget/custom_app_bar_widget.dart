@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/modules/login/login_page.dart';
-import 'package:tutor/modules/meu_perfil/meu_perfil_page.dart';
+import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 
-class CustomAppBarWidget extends StatelessWidget {
+class CustomAppBarWidget extends StatefulWidget {
   const CustomAppBarWidget({Key? key}) : super(key: key);
+
+  @override
+  _CustomAppBarWidgetState createState() => _CustomAppBarWidgetState();
+}
+
+class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
+  final loginController = LoginController();
+  UsuarioLogadoModel _usuario = UsuarioLogadoModel();
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +33,25 @@ class CustomAppBarWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: Text(
-                "Olá, Luis!",
-                textDirection: TextDirection.ltr,
-                style: TextStyles.titleBoldBackground,
-              ),
+            FutureBuilder(
+              future: loginController.obterSessao(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  _usuario = snapshot.data as UsuarioLogadoModel;
+                  return Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        style: TextStyles.titleBoldBackground,
+                        text: "Olá, ",
+                        children: [
+                          TextSpan(text: _usuario.nome),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              },
             ),
             Expanded(
               child: Row(

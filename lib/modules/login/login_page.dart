@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tutor/modules/login/login_controller.dart';
+import 'package:tutor/shared/enum/state_enum.dart';
+import 'package:tutor/shared/models/usuario_login_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/input_text/input_text_widget.dart';
@@ -12,6 +15,20 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final controller = LoginController();
+
+  UsuarioLogin usuarioLogin = UsuarioLogin();
+
+  final _controllerEmail = TextEditingController();
+  final _controllerSenha = TextEditingController();
+
+  @override
+  void dispose() {
+    _controllerEmail.dispose();
+    _controllerSenha.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -59,26 +76,74 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Form(
+                        key: controller.formKey,
                         child: Column(
                           children: [
                             InputTextWidget(
                               label: "Digite seu e-mail.",
                               icon: Icons.email_outlined,
-                              onChanged: (value) {},
+                              controller: _controllerEmail,
+                              validator: controller.validarEmail,
+                              onChanged: (value) {
+                                controller.onChange(email: value);
+                              },
                             ),
                             InputTextWidget(
                               label: "Digite sua senha.",
                               icon: Icons.lock_outline,
-                              onChanged: (value) {},
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  "/agenda",
-                                );
+                              controller: _controllerSenha,
+                              validator: controller.validarSenha,
+                              onChanged: (value) {
+                                controller.onChange(senha: value);
                               },
-                              child: Text("Entrar"),
+                            ),
+                            ValueListenableBuilder(
+                              valueListenable: controller.errorException,
+                              builder: (_, value, __) {
+                                String error = value as String;
+                                if (error.isNotEmpty) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Container(
+                                      child: Text(
+                                        error,
+                                        style: TextStyles.titleListTile,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
+                            ),
+                            ValueListenableBuilder(
+                              valueListenable: controller.state,
+                              builder: (
+                                context,
+                                value,
+                                child,
+                              ) {
+                                StateEnum state = value as StateEnum;
+                                if (state == StateEnum.loading) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 10,
+                                    ),
+                                    child: Container(
+                                      height: 35,
+                                      width: 35,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                } else {
+                                  return ElevatedButton(
+                                    onPressed: () {
+                                      controller.autenticar(context);
+                                    },
+                                    child: Text("Entrar"),
+                                  );
+                                }
+                              },
                             ),
                           ],
                         ),

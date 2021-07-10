@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_passeios/meus_passeios_list_widget.dart';
-import 'package:tutor/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_widget.dart';
-import 'package:tutor/shared/widgets/custom_app_bar_widget/custom_app_bar_widget.dart';
+import 'package:tutor/modules/dogwalkers/dogwalkers_list_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
 class DogwalkersPage extends StatefulWidget {
@@ -14,26 +12,15 @@ class DogwalkersPage extends StatefulWidget {
 class _DogwalkersPageState extends State<DogwalkersPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: CustomAppBarWidget(),
-      ),
-      body: Column(
+    return Container(
+      child: Column(
         children: [
-          Container(
-            child: Column(
-              children: [
-                TitlePageWidget(
-                  title: "Dog walkers",
-                ),
-                MeusPasseiosListWidget(),
-              ],
-            ),
-          )
+          TitlePageWidget(
+            title: "Dog walkers",
+          ),
+          DogwalkersListWidget(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(paginaAtual: 2),
     );
   }
 }

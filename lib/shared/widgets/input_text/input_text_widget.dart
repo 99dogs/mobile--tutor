@@ -7,9 +7,11 @@ class InputTextWidget extends StatelessWidget {
   final String label;
   final IconData icon;
   final String? initialValue;
-  final String? Function(String)? validator;
+  final String? Function(String?)? validator;
   final TextEditingController? controller;
   final void Function(String value) onChanged;
+  final TextInputType? textInputType;
+  final bool enable;
 
   const InputTextWidget({
     Key? key,
@@ -19,6 +21,8 @@ class InputTextWidget extends StatelessWidget {
     this.validator,
     this.controller,
     required this.onChanged,
+    this.textInputType,
+    this.enable = true,
   }) : super(key: key);
 
   @override
@@ -30,8 +34,11 @@ class InputTextWidget extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              enabled: enable,
+              keyboardType: textInputType,
               onChanged: onChanged,
               controller: controller,
+              validator: validator,
               initialValue: initialValue,
               style: TextStyles.input,
               decoration: InputDecoration(
@@ -42,11 +49,12 @@ class InputTextWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Icon(
-                          icon,
-                          color: AppColors.primary,
-                        )),
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Icon(
+                        icon,
+                        color: AppColors.primary,
+                      ),
+                    ),
                     Container(
                       width: 1,
                       height: 48,

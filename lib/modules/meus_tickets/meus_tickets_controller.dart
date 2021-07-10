@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tutor/repositories/passeio_repository.dart';
+import 'package:tutor/repositories/ticket_repository.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
-import 'package:tutor/shared/models/passeio_model.dart';
+import 'package:tutor/shared/models/ticket_model.dart';
 import 'package:intl/intl.dart';
 
-class MeusPasseiosController {
-  final _passeioRepository = PasseioRepository();
-  List<PasseioModel> passeios = [];
+class MeusTicketsController {
+  final _ticketRepository = TicketRepository();
+  List<TicketModel> tickets = [];
 
   final state = ValueNotifier<StateEnum>(StateEnum.start);
   final errorException = ValueNotifier<String>("");
@@ -20,12 +20,13 @@ class MeusPasseiosController {
 
   Future buscarTodos() async {
     try {
+      errorException.value = "";
       state.value = StateEnum.loading;
-      passeios = await _passeioRepository.buscarTodos();
+      tickets = await _ticketRepository.buscarTodos();
       state.value = StateEnum.success;
     } catch (e) {
-      state.value = StateEnum.error;
       errorException.value = e.toString();
+      state.value = StateEnum.error;
     }
   }
 }

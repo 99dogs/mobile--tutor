@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_passeios/meus_passeios_controller.dart';
+import 'package:tutor/modules/dogwalkers/dogwalkers_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
+import 'package:tutor/shared/widgets/stars_rating/star_rating_widget.dart';
 
-class MeusPasseiosListWidget extends StatefulWidget {
-  const MeusPasseiosListWidget({Key? key}) : super(key: key);
+class DogwalkersListWidget extends StatefulWidget {
+  const DogwalkersListWidget({Key? key}) : super(key: key);
 
   @override
-  _MeusPasseiosListWidgetState createState() => _MeusPasseiosListWidgetState();
+  _DogwalkersListWidgetState createState() => _DogwalkersListWidgetState();
 }
 
-class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
-  final controller = MeusPasseiosController();
+class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
+  final controller = DogwalkersController();
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
               ),
             );
           } else if (state == StateEnum.success) {
-            if (controller.passeios.isNotEmpty) {
+            if (controller.dogwalkers.isNotEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -60,45 +61,20 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                       await controller.buscarTodos();
                     },
                     child: ListView.builder(
-                      itemCount: controller.passeios.length,
+                      itemCount: controller.dogwalkers.length,
                       itemBuilder: (context, index) {
-                        Color colorStatus;
-                        String status = controller.passeios[index].status!;
-
-                        if (status == "Aceito") {
-                          colorStatus = Colors.green;
-                        } else if (status == "Recusado") {
-                          colorStatus = AppColors.delete;
-                        } else if (status == "Espera") {
-                          colorStatus = Colors.amber;
-                        } else if (status == "Andamento") {
-                          colorStatus = Colors.teal;
-                        } else {
-                          colorStatus = Colors.black;
-                        }
-
                         return Column(
                           children: [
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
                                 title: Text(
-                                  controller.passeios[index].dogwalker!.nome!,
+                                  controller.dogwalkers[index].nome!,
                                   style: TextStyles.buttonBoldGray,
                                 ),
-                                subtitle: Text.rich(
-                                  TextSpan(
-                                    text: "#" +
-                                        controller.passeios[index].id!
-                                            .toString() +
-                                        " | ",
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            controller.passeios[index].status!,
-                                      )
-                                    ],
-                                  ),
+                                subtitle: StarRatingWidget(
+                                  rating:
+                                      controller.dogwalkers[index].avaliacao!,
                                 ),
                                 leading: Container(
                                   height: 40,
@@ -112,8 +88,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                                   ),
                                 ),
                                 trailing: Text(
-                                  controller.getFormatedDate(
-                                      controller.passeios[index].datahora!),
+                                  "",
                                   textDirection: TextDirection.rtl,
                                 ),
                               ),
@@ -126,7 +101,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                                 width: size.width,
                                 height: 5,
                                 decoration: BoxDecoration(
-                                  color: colorStatus,
+                                  color: AppColors.success,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(50),
                                     bottomRight: Radius.circular(50),
@@ -147,7 +122,7 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
                 child: Center(
                   child: Container(
                     child: Text(
-                      "Você ainda não solicitou nenhum passeio.",
+                      "Você ainda não cadastrou nenhum cão.",
                       style: TextStyles.input,
                     ),
                   ),
