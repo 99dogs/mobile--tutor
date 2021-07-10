@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/meus_caes/meus_caes_controller.dart';
+import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
@@ -33,8 +34,8 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
       child: ValueListenableBuilder(
         valueListenable: controller.state,
         builder: (_, value, __) {
-          MeusCaesState state = value as MeusCaesState;
-          if (state == MeusCaesState.loading) {
+          StateEnum state = value as StateEnum;
+          if (state == StateEnum.loading) {
             return Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -46,7 +47,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                 ),
               ),
             );
-          } else if (state == MeusCaesState.success) {
+          } else if (state == StateEnum.success) {
             if (controller.cachorros.isNotEmpty) {
               return Expanded(
                 child: Padding(
