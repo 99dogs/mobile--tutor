@@ -1,3 +1,4 @@
+import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
@@ -26,42 +27,47 @@ class BottomButtonsWidget extends StatelessWidget {
     return Container(
       color: AppColors.background,
       height: 57,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Divider(
-            thickness: 1,
-            height: 1,
-            color: AppColors.stroke,
-          ),
-          Container(
-            height: 56,
-            child: Row(
-              children: [
-                Expanded(
-                  child: LabelButton(
-                    label: primaryLabel,
-                    onPressed: primaryOnPressed,
-                    style: enablePrimaryColor ? TextStyles.buttonPrimary : null,
-                  ),
-                ),
-                Container(
-                  width: 1,
-                  height: double.maxFinite,
-                  color: AppColors.stroke,
-                ),
-                Expanded(
-                  child: LabelButton(
-                    label: secondaryLabel,
-                    onPressed: secondaryOnPressed,
-                    style:
-                        enableSecondaryColor ? TextStyles.buttonPrimary : null,
-                  ),
-                ),
-              ],
+      child: AnimatedCard(
+        direction: AnimatedCardDirection.bottom,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Divider(
+              thickness: 1,
+              height: 1,
+              color: AppColors.stroke,
             ),
-          ),
-        ],
+            Container(
+              height: 56,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: LabelButton(
+                      label: primaryLabel,
+                      onPressed: primaryOnPressed,
+                      style:
+                          enablePrimaryColor ? TextStyles.buttonPrimary : null,
+                    ),
+                  ),
+                  Container(
+                    width: 1,
+                    height: double.maxFinite,
+                    color: AppColors.stroke,
+                  ),
+                  Expanded(
+                    child: LabelButton(
+                      label: secondaryLabel,
+                      onPressed: secondaryOnPressed,
+                      style: enableSecondaryColor
+                          ? TextStyles.buttonPrimary
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

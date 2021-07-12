@@ -40,7 +40,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: 6,
                   itemBuilder: (context, index) {
                     return ShimmerListTileWidget();
                   },

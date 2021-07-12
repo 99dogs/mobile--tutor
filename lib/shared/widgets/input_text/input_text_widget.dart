@@ -34,6 +34,7 @@ class InputTextWidget extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               enabled: enable,
               keyboardType: textInputType,
               onChanged: onChanged,

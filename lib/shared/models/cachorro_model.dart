@@ -45,11 +45,24 @@ class CachorroModel {
     );
   }
 
+  String? validarNome(String? value) =>
+      value?.isEmpty ?? true ? "O nome não pode ser vazio" : null;
+
+  String? validarPorte(PorteModel? value) =>
+      value?.nome!.isEmpty ?? true ? "O porte não pode ser vazio" : null;
+
+  String? validarRaca(RacaModel? value) =>
+      value?.nome!.isEmpty ?? true ? "A raça não pode ser vazia" : null;
+
+  String? validarComportamento(String? value) =>
+      value?.isEmpty ?? true ? "O comportamento não pode ser vazio" : null;
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nome': nome,
-      'dataNascimento': dataNascimento!.millisecondsSinceEpoch,
+      'dataNascimento':
+          dataNascimento != null ? dataNascimento!.millisecondsSinceEpoch : '',
       'comportamento': comportamento,
       'racaId': racaId,
       'porteId': porteId,
@@ -77,7 +90,9 @@ class CachorroModel {
   CachorroModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
-    dataNascimento = json['dataNascimento'];
+    dataNascimento = json['dataNascimento'] != null
+        ? DateTime.parse(json['dataNascimento'])
+        : null;
     comportamento = json['comportamento'];
     racaId = json['racaId'];
     porteId = json['porteId'];
