@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:tutor/repositories/cidade_repository.dart';
 import 'package:tutor/repositories/estado_repository.dart';
 import 'package:tutor/repositories/usuario_repository.dart';
+import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/cidade_model.dart';
 import 'package:tutor/shared/models/estado_model.dart';
 import 'package:tutor/shared/models/usuario_alterar_dados_model.dart';
+import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/models/usuario_model.dart';
 
 class MeuPerfilController {
   final formKey = GlobalKey<FormState>();
+  final authController = AuthController();
   final usuarioRepository = UsuarioRepository();
   final estadoRepository = EstadoRepository();
   final cidadeRepository = CidadeRepository();
@@ -100,11 +103,22 @@ class MeuPerfilController {
 
       state.value = MeuPerfilFormState.loading;
       await usuarioRepository.alterarMinhasInformacoes(usuarioAlterarDados);
+      await atualizarSessao(usuarioAlterarDados);
       state.value = MeuPerfilFormState.success;
     } catch (e) {
       state.value = MeuPerfilFormState.error;
       errorException.value = e.toString();
     }
+  }
+
+  Future atualizarSessao(UsuarioAlterarDadosModel usuario) async {
+    UsuarioLogadoModel usuarioSalvo = await authController.obterSessao();
+    UsuarioLogadoModel usuarioAtualizado = UsuarioLogadoModel(
+      id: usuarioSalvo.id,
+      nome: usuario.nome,
+      token: usuarioSalvo.token,
+    );
+    await authController.salvarSessao(usuarioAtualizado);
   }
 }
 

@@ -2,6 +2,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 
 class AuthController {
+  Future<void> salvarSessao(UsuarioLogadoModel usuario) async {
+    final instance = await SharedPreferences.getInstance();
+    await instance.setString("usuario", usuario.toJson());
+    return;
+  }
+
   Future<UsuarioLogadoModel> obterSessao() async {
     UsuarioLogadoModel usuario = UsuarioLogadoModel();
     final instance = await SharedPreferences.getInstance();

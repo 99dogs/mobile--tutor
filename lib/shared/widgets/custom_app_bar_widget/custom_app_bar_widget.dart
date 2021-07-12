@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/modules/login/login_page.dart';
+import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
@@ -15,7 +14,7 @@ class CustomAppBarWidget extends StatefulWidget {
 }
 
 class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
-  final loginController = LoginController();
+  final authController = AuthController();
   UsuarioLogadoModel _usuario = UsuarioLogadoModel();
 
   @override
@@ -34,7 +33,7 @@ class _CustomAppBarWidgetState extends State<CustomAppBarWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FutureBuilder(
-              future: loginController.obterSessao(),
+              future: authController.obterSessao(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   _usuario = snapshot.data as UsuarioLogadoModel;

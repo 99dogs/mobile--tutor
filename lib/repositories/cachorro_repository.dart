@@ -84,4 +84,78 @@ class CachorroRepository {
       throw (e);
     }
   }
+
+  Future<CachorroModel> buscarPorId(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/cachorro/$id",
+      );
+      var response = await _client.get(url, headers: await this.headers());
+
+      if (response.statusCode == 200) {
+        CachorroModel cachorro = CachorroModel.fromJson(
+          jsonDecode(response.body),
+        );
+
+        return cachorro;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<String?> alterar(CachorroModel cachorro) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/cachorro/" + cachorro.id.toString(),
+      );
+      var response = await _client.put(
+        url,
+        headers: await this.headers(),
+        body: cachorro.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        return "";
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<String?> excluir(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/cachorro/$id",
+      );
+      var response = await _client.delete(url, headers: await this.headers());
+
+      if (response.statusCode == 200) {
+        return "";
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }

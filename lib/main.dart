@@ -4,7 +4,9 @@ import 'package:tutor/modules/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
 import 'package:tutor/modules/meu_perfil/meu_perfil_page.dart';
+import 'package:tutor/modules/meus_caes/alterar_cao_page.dart';
 import 'package:tutor/modules/meus_caes/cadastrar_cao_page.dart';
+import 'package:tutor/modules/meus_caes/detalhes_page.dart';
 import 'package:tutor/modules/meus_caes/meus_caes_page.dart';
 import 'package:tutor/modules/meus_passeios/meus_passeios_page.dart';
 import 'package:tutor/modules/meus_tickets/meus_tickets_page.dart';
@@ -36,7 +38,13 @@ class MyApp extends StatelessWidget {
         "/agenda": (context) => AgendaPage(),
         "/passeio/list": (context) => MeusPasseiosPage(),
         "/cachorro/list": (context) => MeusCaesPage(),
+        "/cachorro/detail": (context) => DetalhesPage(
+              id: ModalRoute.of(context)!.settings.arguments as int,
+            ),
         "/cachorro/add": (context) => CadastrarCaoPage(),
+        "/cachorro/edit": (context) => AlterarCaoPage(
+              id: ModalRoute.of(context)!.settings.arguments as int,
+            ),
         "/dogwalker/list": (context) => DogwalkersPage(),
         "/ticket/list": (context) => MeusTicketsPage()
       },

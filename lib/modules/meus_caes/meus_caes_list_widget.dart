@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutor/modules/meus_caes/detalhes_page.dart';
 import 'package:tutor/modules/meus_caes/meus_caes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
@@ -40,7 +41,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ListView.builder(
-                  itemCount: 6,
+                  itemCount: 3,
                   itemBuilder: (context, index) {
                     return ShimmerListTileWidget();
                   },
@@ -88,6 +89,13 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                                   controller.cachorros[index].porte!.nome!,
                                   textDirection: TextDirection.rtl,
                                 ),
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/cachorro/detail",
+                                    arguments: controller.cachorros[index].id!,
+                                  );
+                                },
                               ),
                             ),
                             Padding(

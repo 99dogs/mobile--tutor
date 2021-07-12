@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/home/home_controller.dart';
-import 'package:tutor/modules/meus_caes/cadastrar_cao_controller.dart';
+import 'package:tutor/modules/meus_caes/alterar_cao_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/cachorro_model.dart';
 import 'package:tutor/shared/models/porte_model.dart';
@@ -18,16 +18,20 @@ import 'package:tutor/shared/widgets/shimmer_input/shimmer_input_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 import 'package:intl/intl.dart';
 
-class CadastrarCaoPage extends StatefulWidget {
-  const CadastrarCaoPage({Key? key}) : super(key: key);
+class AlterarCaoPage extends StatefulWidget {
+  final int id;
+  const AlterarCaoPage({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   @override
-  _CadastrarCaoPageState createState() => _CadastrarCaoPageState();
+  _AlterarCaoPageState createState() => _AlterarCaoPageState();
 }
 
-class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
+class _AlterarCaoPageState extends State<AlterarCaoPage> {
   final homeController = HomeController();
-  final controller = CadastrarCaoController();
+  final controller = AlterarCaoController();
 
   final nomeInputTextController = TextEditingController();
   final comportamentoInputTextController = TextEditingController();
@@ -42,7 +46,8 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
   }
 
   void start() async {
-    await controller.init();
+    await controller.init(widget.id);
+    controller.cachorro.id = widget.id;
   }
 
   @override
@@ -65,8 +70,10 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                 child: Column(
                   children: [
                     TitlePageWidget(
-                      title: "Cadastrar um novo cão",
+                      title: "Alterar dados do cão",
                       enableBackButton: true,
+                      routePage: "/cachorro/detail",
+                      args: widget.id,
                     ),
                   ],
                 ),
@@ -101,6 +108,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                   label: "Qual é o nome?*",
                                   icon: FontAwesomeIcons.dog,
                                   validator: CachorroModel().validarNome,
+                                  initialValue: controller.cachorro.nome,
                                   onChanged: (value) {
                                     controller.onChanged(nome: value);
                                   },
@@ -110,6 +118,8 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                     AnimatedCard(
                                       direction: AnimatedCardDirection.left,
                                       child: DateTimeField(
+                                        initialValue:
+                                            controller.cachorro.dataNascimento,
                                         format: DateFormat("yyyy-MM-dd"),
                                         onShowPicker: (context, currentValue) {
                                           return showDatePicker(
@@ -168,6 +178,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                     AnimatedCard(
                                       direction: AnimatedCardDirection.left,
                                       child: DropdownButtonFormField(
+                                        value: controller.cachorro.porte,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         validator: CachorroModel().validarPorte,
@@ -234,6 +245,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                     AnimatedCard(
                                       direction: AnimatedCardDirection.left,
                                       child: DropdownButtonFormField(
+                                        value: controller.cachorro.raca,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         validator: CachorroModel().validarRaca,
@@ -297,6 +309,8 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                 InputTextWidget(
                                   label: "Como é o comportamento?*",
                                   icon: FontAwesomeIcons.smile,
+                                  initialValue:
+                                      controller.cachorro.comportamento,
                                   validator:
                                       CachorroModel().validarComportamento,
                                   onChanged: (value) {
@@ -324,7 +338,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                controller.init();
+                                controller.init(widget.id);
                               },
                               icon: Icon(Icons.refresh_outlined),
                               label: Text("Tentar novamente"),
@@ -347,12 +361,15 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
               return BottomButtonsWidget(
                 primaryLabel: "Voltar",
                 primaryOnPressed: () {
-                  homeController.mudarDePagina(3);
-                  Navigator.pushReplacementNamed(context, "/home");
+                  Navigator.pushReplacementNamed(
+                    context,
+                    "/cachorro/detail",
+                    arguments: widget.id,
+                  );
                 },
-                secondaryLabel: "Cadastrar",
+                secondaryLabel: "Alterar",
                 secondaryOnPressed: () async {
-                  String? response = await controller.cadastrar();
+                  String? response = await controller.alterar();
                   if (response != null) {
                     if (response.isNotEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -361,8 +378,11 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                         ),
                       );
                     } else {
-                      homeController.mudarDePagina(3);
-                      Navigator.pushReplacementNamed(context, "/home");
+                      Navigator.pushReplacementNamed(
+                        context,
+                        "/cachorro/detail",
+                        arguments: widget.id,
+                      );
                     }
                   }
                 },
