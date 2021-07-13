@@ -175,6 +175,8 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                         SizedBox(height: 16),
                         ListTile(
                           title: Text("Horário de atendimento"),
+                          trailing: Icon(Icons.arrow_upward_outlined),
+                          leading: Icon(Icons.list_alt_outlined),
                           onTap: () {
                             showModalBottomSheet<void>(
                               context: context,
@@ -201,8 +203,11 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             );
                           },
                         ),
+                        Divider(),
                         ListTile(
                           title: Text("Qualificações"),
+                          trailing: Icon(Icons.arrow_upward_outlined),
+                          leading: Icon(Icons.bookmarks_outlined),
                           onTap: () {
                             showModalBottomSheet<void>(
                               context: context,
@@ -229,6 +234,38 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             );
                           },
                         ),
+                        Divider(),
+                        ListTile(
+                          title: Text("Avaliações"),
+                          trailing: Icon(Icons.arrow_upward_outlined),
+                          leading: Icon(Icons.stars_outlined),
+                          onTap: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  color: AppColors.background,
+                                  child: ListView.builder(
+                                    itemCount: controller.qualificacoes.length,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Text(controller
+                                                .qualificacoes[index]
+                                                .modalidade! +
+                                            " / " +
+                                            controller
+                                                .qualificacoes[index].titulo!),
+                                        subtitle: Text(controller
+                                            .qualificacoes[index].descricao!),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                        Divider(),
                       ],
                     );
                   } else {
