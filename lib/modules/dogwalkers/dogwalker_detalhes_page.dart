@@ -201,6 +201,34 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             );
                           },
                         ),
+                        ListTile(
+                          title: Text("Qualificações"),
+                          onTap: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  color: AppColors.background,
+                                  child: ListView.builder(
+                                    itemCount: controller.qualificacoes.length,
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        title: Text(controller
+                                                .qualificacoes[index]
+                                                .modalidade! +
+                                            " / " +
+                                            controller
+                                                .qualificacoes[index].titulo!),
+                                        subtitle: Text(controller
+                                            .qualificacoes[index].descricao!),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     );
                   } else {
