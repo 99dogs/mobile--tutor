@@ -10,6 +10,7 @@ import 'package:tutor/modules/meus_caes/detalhes_page.dart';
 import 'package:tutor/modules/meus_caes/meus_caes_page.dart';
 import 'package:tutor/modules/meus_passeios/meus_passeios_page.dart';
 import 'package:tutor/modules/meus_tickets/meus_tickets_page.dart';
+import 'package:tutor/modules/meus_tickets/solicitar_ticket_page.dart';
 import 'package:tutor/modules/splash/splash_page.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),
         "/dogwalker/list": (context) => DogwalkersPage(),
-        "/ticket/list": (context) => MeusTicketsPage()
+        "/ticket/list": (context) => MeusTicketsPage(),
+        "/ticket/add": (context) => SolicitarTicketPage(),
       },
     );
   }

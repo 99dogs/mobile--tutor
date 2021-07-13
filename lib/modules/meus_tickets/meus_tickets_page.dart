@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/meus_tickets/meus_tickets_list_widget.dart';
+import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
 class MeusTicketsPage extends StatefulWidget {
@@ -19,6 +20,21 @@ class _MeusTicketsPageState extends State<MeusTicketsPage> {
             title: "Meus tickets",
           ),
           MeusTicketsListWidget(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: FloatingActionButton(
+                  child: const Icon(Icons.add),
+                  backgroundColor: AppColors.successSecondary,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, "/ticket/add");
+                  },
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

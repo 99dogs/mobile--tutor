@@ -115,6 +115,26 @@ class TicketModel {
     );
   }
 
+  String? validarQuantidade(String? value) {
+    if (value!.isEmpty) {
+      return "A quantidade não pode ser vazio";
+    }
+    var qtde = int.parse(value);
+    if (qtde.isNaN || qtde == 0) {
+      return "A quantidade não pode ser vazio";
+    } else if (qtde.isNegative || qtde == 0) {
+      return "A quantidade não pode ser menor ou igual a zero";
+    } else {
+      return null;
+    }
+  }
+
+  String? validarCpf(String? value) =>
+      value?.isEmpty ?? true ? "O CPF não pode ser vazio" : null;
+
+  String? validarFormaPagamento(FormaDePagamentoModel? value) =>
+      value?.nome!.isEmpty ?? true ? "O CPF não pode ser vazio" : null;
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
