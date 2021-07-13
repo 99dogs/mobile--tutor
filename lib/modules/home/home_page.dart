@@ -6,12 +6,12 @@ import 'package:tutor/modules/meus_caes/meus_caes_page.dart';
 import 'package:tutor/modules/meus_passeios/meus_passeios_page.dart';
 import 'package:tutor/modules/meus_tickets/meus_tickets_page.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
-import 'package:tutor/shared/drawer/drawer_widget.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_widget.dart';
+import 'package:tutor/shared/widgets/drawer/drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
