@@ -79,107 +79,116 @@ class _SolicitarTicketPageState extends State<SolicitarTicketPage> {
                     );
                   } else if (state == StateEnum.success) {
                     return Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 25,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 16,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 20,
+                                  bottom: 30,
+                                ),
+                                child: TicketInfoWidget(),
                               ),
-                              child: TicketInfoWidget(),
-                            ),
-                            Form(
-                              key: controller.formKey,
-                              child: Column(
-                                children: [
-                                  InputTextWidget(
-                                    label: "Qual a quantidade desejada?",
-                                    icon: Icons
-                                        .production_quantity_limits_outlined,
-                                    textInputType: TextInputType.number,
-                                    validator: TicketModel().validarQuantidade,
-                                    onChanged: (value) {
-                                      controller.onChange(
-                                        quantidade: int.parse(value),
-                                      );
-                                    },
-                                  ),
-                                  AnimatedCard(
-                                    direction: AnimatedCardDirection.left,
-                                    child: DropdownButtonFormField(
+                              Form(
+                                key: controller.formKey,
+                                child: Column(
+                                  children: [
+                                    InputTextWidget(
+                                      label: "Qual a quantidade desejada?",
+                                      icon: Icons
+                                          .production_quantity_limits_outlined,
+                                      textInputType: TextInputType.number,
                                       validator:
-                                          TicketModel().validarFormaPagamento,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      isExpanded: true,
-                                      iconSize: 30,
-                                      style: TextStyle(color: Colors.blue),
-                                      decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.zero,
-                                        labelText: "E forma de pagamento?",
-                                        labelStyle: TextStyles.buttonGray,
-                                        icon: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 18,
-                                              ),
-                                              child: Icon(
-                                                Icons.payments_outlined,
-                                                color: AppColors.primary,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 1,
-                                              height: 48,
-                                              color: AppColors.stroke,
-                                            )
-                                          ],
-                                        ),
-                                        border: InputBorder.none,
-                                      ),
-                                      items: controller.formasPagamento
-                                          .map((FormaDePagamentoModel formaPg) {
-                                        return DropdownMenuItem<
-                                            FormaDePagamentoModel>(
-                                          value: formaPg,
-                                          child: Text(formaPg.nome!),
-                                        );
-                                      }).toList(),
-                                      onChanged: (val) {
-                                        FormaDePagamentoModel value =
-                                            val as FormaDePagamentoModel;
+                                          TicketModel().validarQuantidade,
+                                      onChanged: (value) {
                                         controller.onChange(
-                                            formaDePagamentoId: value.id);
+                                          quantidade: int.parse(value),
+                                        );
                                       },
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: Divider(
-                                      height: 1,
-                                      thickness: 1,
-                                      color: AppColors.stroke,
+                                    AnimatedCard(
+                                      direction: AnimatedCardDirection.left,
+                                      child: DropdownButtonFormField(
+                                        validator:
+                                            TicketModel().validarFormaPagamento,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        isExpanded: true,
+                                        iconSize: 30,
+                                        style: TextStyle(color: Colors.blue),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.zero,
+                                          labelText: "E forma de pagamento?",
+                                          labelStyle: TextStyles.buttonGray,
+                                          icon: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 18,
+                                                ),
+                                                child: Icon(
+                                                  Icons.payments_outlined,
+                                                  color: AppColors.primary,
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 1,
+                                                height: 48,
+                                                color: AppColors.stroke,
+                                              )
+                                            ],
+                                          ),
+                                          border: InputBorder.none,
+                                        ),
+                                        items: controller.formasPagamento.map(
+                                            (FormaDePagamentoModel formaPg) {
+                                          return DropdownMenuItem<
+                                              FormaDePagamentoModel>(
+                                            value: formaPg,
+                                            child: Text(formaPg.nome!),
+                                          );
+                                        }).toList(),
+                                        onChanged: (val) {
+                                          FormaDePagamentoModel value =
+                                              val as FormaDePagamentoModel;
+                                          controller.onChange(
+                                              formaDePagamentoId: value.id);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  InputTextWidget(
-                                    label: "Informe seu CPF",
-                                    icon: Icons.pin,
-                                    textInputType: TextInputType.number,
-                                    controller: cpfPagadorTextController,
-                                    validator: TicketModel().validarCpf,
-                                    onChanged: (value) {
-                                      controller.onChange(
-                                        cpfPagador: value,
-                                      );
-                                    },
-                                  ),
-                                ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16),
+                                      child: Divider(
+                                        height: 1,
+                                        thickness: 1,
+                                        color: AppColors.stroke,
+                                      ),
+                                    ),
+                                    InputTextWidget(
+                                      label: "Informe seu CPF",
+                                      icon: Icons.pin,
+                                      textInputType: TextInputType.number,
+                                      controller: cpfPagadorTextController,
+                                      validator: TicketModel().validarCpf,
+                                      onChanged: (value) {
+                                        controller.onChange(
+                                          cpfPagador: value,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -245,7 +254,11 @@ class _SolicitarTicketPageState extends State<SolicitarTicketPage> {
                         ),
                       );
                     } else {
-                      Navigator.pushReplacementNamed(context, "/home");
+                      Navigator.pushReplacementNamed(
+                        context,
+                        "/ticket/detail",
+                        arguments: controller.novoTicket.id,
+                      );
                     }
                   }
                 },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/home/home_controller.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 
@@ -44,7 +45,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               label: 'Cachorros',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.payments_outlined),
+              icon: Icon(FontAwesomeIcons.receipt),
               label: 'Tickets',
             ),
           ],

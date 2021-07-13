@@ -18,6 +18,7 @@ class _MeusCaesPageState extends State<MeusCaesPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: UniqueKey(),
       child: Column(
         children: [
           TitlePageWidget(

@@ -15,6 +15,7 @@ class _AgendaPageState extends State<AgendaPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: UniqueKey(),
       child: Column(
         children: [
           TitlePageWidget(

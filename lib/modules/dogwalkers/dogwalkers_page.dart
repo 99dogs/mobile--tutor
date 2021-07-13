@@ -13,6 +13,7 @@ class _DogwalkersPageState extends State<DogwalkersPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: UniqueKey(),
       child: Column(
         children: [
           TitlePageWidget(

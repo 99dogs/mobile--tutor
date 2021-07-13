@@ -83,7 +83,7 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                         String statusPg = "";
                         Color statusColor = AppColors.stroke;
                         if (controller.tickets[index].pendente!) {
-                          statusPg = "Aguardando pagamento";
+                          statusPg = "Pendente";
                           statusColor = Colors.amber;
                         }
 
@@ -93,7 +93,7 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                         }
 
                         if (controller.tickets[index].pago!) {
-                          statusPg = "Pagamento concluído";
+                          statusPg = "Pago";
                           statusColor = AppColors.success;
                         }
 
@@ -103,11 +103,11 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                               color: AppColors.shape,
                               child: ListTile(
                                 onTap: () async {
-                                  String _url =
-                                      controller.tickets[index].faturaUrl!;
-                                  await canLaunch(_url)
-                                      ? await launch(_url)
-                                      : throw 'Could not launch $_url';
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/ticket/detail",
+                                    arguments: controller.tickets[index].id,
+                                  );
                                 },
                                 title: Text(
                                   controller

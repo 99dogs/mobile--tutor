@@ -125,4 +125,34 @@ class TicketRepository {
       throw (e);
     }
   }
+
+  Future<TicketModel> buscarPorId(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/ticket/" + id.toString(),
+      );
+
+      var response = await _client.get(
+        url,
+        headers: await this.headers(),
+      );
+
+      TicketModel ticket = TicketModel.fromJson(
+        jsonDecode(response.body),
+      );
+
+      if (response.statusCode == 200) {
+        return ticket;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }
