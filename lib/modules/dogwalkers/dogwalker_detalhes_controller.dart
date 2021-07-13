@@ -1,0 +1,34 @@
+import 'package:flutter/cupertino.dart';
+import 'package:tutor/repositories/usuario_repository.dart';
+import 'package:tutor/shared/enum/state_enum.dart';
+import 'package:tutor/shared/models/usuario_model.dart';
+import 'package:intl/intl.dart';
+
+class DogwalkerDetalhesController {
+  final usuarioRepository = UsuarioRepository();
+
+  final state = ValueNotifier<StateEnum>(StateEnum.start);
+  final errorException = ValueNotifier<String>("");
+  UsuarioModel dogwalker = UsuarioModel();
+
+  formataData(
+    _date,
+  ) {
+    var inputFormat = DateFormat('yyyy-MM-ddTHH:mm:ss');
+    var inputDate = inputFormat.parse(_date);
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    return outputFormat.format(inputDate).toString();
+  }
+
+  Future init(int id) async {
+    try {
+      errorException.value = "";
+      state.value = StateEnum.loading;
+      dogwalker = await usuarioRepository.buscarPorId(id);
+      state.value = StateEnum.success;
+    } catch (e) {
+      state.value = StateEnum.error;
+      errorException.value = e.toString();
+    }
+  }
+}

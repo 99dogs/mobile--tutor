@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/agenda/agenda_page.dart';
+import 'package:tutor/modules/dogwalkers/dogwalker_detalhes_page.dart';
 import 'package:tutor/modules/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),
         "/dogwalker/list": (context) => DogwalkersPage(),
+        "/dogwalker/detail": (context) => DogwalkerDetalhesPage(
+              id: ModalRoute.of(context)!.settings.arguments as int,
+            ),
         "/ticket/list": (context) => MeusTicketsPage(),
         "/ticket/add": (context) => SolicitarTicketPage(),
         "/ticket/detail": (context) => DetalhesTicketPage(

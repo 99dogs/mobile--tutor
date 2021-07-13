@@ -68,6 +68,13 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/dogwalker/detail",
+                                    arguments: controller.dogwalkers[index].id,
+                                  );
+                                },
                                 title: Text(
                                   controller.dogwalkers[index].nome!,
                                   style: TextStyles.buttonBoldGray,

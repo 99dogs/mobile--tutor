@@ -35,7 +35,6 @@ dependencies:
   shimmer: ^2.0.0
   url_launcher: ^6.0.9
   datetime_picker_formfield: ^2.0.0
-  lottie: ^1.1.0
 
 dev_dependencies:
   flutter_test:
