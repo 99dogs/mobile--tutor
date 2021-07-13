@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:tutor/repositories/configuracao_horario_repository.dart';
 import 'package:tutor/repositories/usuario_repository.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
+import 'package:tutor/shared/models/configuracao_horario_model.dart';
 import 'package:tutor/shared/models/usuario_model.dart';
 import 'package:intl/intl.dart';
 
 class DogwalkerDetalhesController {
   final usuarioRepository = UsuarioRepository();
+  final configuracaoHorarioRepository = ConfiguracaoHorarioRepository();
 
   final state = ValueNotifier<StateEnum>(StateEnum.start);
   final errorException = ValueNotifier<String>("");
+
   UsuarioModel dogwalker = UsuarioModel();
+  List<ConfiguracaoHorarioModel> horarios = [];
 
   formataData(
     _date,
@@ -25,6 +30,7 @@ class DogwalkerDetalhesController {
       errorException.value = "";
       state.value = StateEnum.loading;
       dogwalker = await usuarioRepository.buscarPorId(id);
+      horarios = await configuracaoHorarioRepository.buscarPorDogwalker(id);
       state.value = StateEnum.success;
     } catch (e) {
       state.value = StateEnum.error;

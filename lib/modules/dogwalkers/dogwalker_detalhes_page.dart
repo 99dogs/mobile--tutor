@@ -26,13 +26,23 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
 
   @override
   void initState() {
-    start();
     super.initState();
+    start();
   }
 
   void start() async {
     await controller.init(widget.id);
   }
+
+  final diasSemana = {
+    1: "Segunda-feira",
+    2: "Terça-feira",
+    3: "Quarta-feira",
+    4: "Quinta-feira",
+    5: "Sexta-feira",
+    6: "Sábado",
+    0: "Domingo",
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +53,7 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
       child: Scaffold(
         body: Container(
           color: AppColors.background,
-          height: double.maxFinite,
+          height: size.height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -163,6 +173,34 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                         ),
                         Divider(),
                         SizedBox(height: 16),
+                        ListTile(
+                          title: Text("Horário de atendimento"),
+                          onTap: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  color: AppColors.background,
+                                  child: ListView.builder(
+                                    itemCount: controller.horarios.length,
+                                    itemBuilder: (context, index) {
+                                      String diaDaSemana = diasSemana[controller
+                                          .horarios[index].diaSemana] as String;
+                                      return ListTile(
+                                        title: Text(diaDaSemana),
+                                        subtitle: Text(controller
+                                                .horarios[index].horaInicio! +
+                                            " - " +
+                                            controller
+                                                .horarios[index].horaFinal!),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     );
                   } else {
