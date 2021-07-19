@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/agenda/agenda_page.dart';
-import 'package:tutor/modules/dogwalkers/dogwalkers_page.dart';
+import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_controller.dart';
-import 'package:tutor/modules/meus_caes/meus_caes_page.dart';
-import 'package:tutor/modules/meus_passeios/meus_passeios_page.dart';
-import 'package:tutor/modules/meus_tickets/meus_tickets_page.dart';
+import 'package:tutor/modules/cachorro/meus_caes/meus_caes_page.dart';
+import 'package:tutor/modules/passeio/meus_passeios/meus_passeios_page.dart';
+import 'package:tutor/modules/ticket/meus_tickets/meus_tickets_page.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';

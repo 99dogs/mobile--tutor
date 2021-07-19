@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/dogwalkers/dogwalkers_controller.dart';
+import 'package:tutor/modules/cachorro/detalhes/detalhes_page.dart';
+import 'package:tutor/modules/cachorro/meus_caes/meus_caes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
-import 'package:tutor/shared/widgets/stars_rating/star_rating_widget.dart';
 
-class DogwalkersListWidget extends StatefulWidget {
-  const DogwalkersListWidget({Key? key}) : super(key: key);
+class MeusCaesListWidget extends StatefulWidget {
+  const MeusCaesListWidget({Key? key}) : super(key: key);
 
   @override
-  _DogwalkersListWidgetState createState() => _DogwalkersListWidgetState();
+  _MeusCaesListWidgetState createState() => _MeusCaesListWidgetState();
 }
 
-class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
-  final controller = DogwalkersController();
+class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
+  final controller = MeusCaesController();
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: 3,
                   itemBuilder: (context, index) {
                     return ShimmerListTileWidget();
                   },
@@ -49,7 +49,7 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
               ),
             );
           } else if (state == StateEnum.success) {
-            if (controller.dogwalkers.isNotEmpty) {
+            if (controller.cachorros.isNotEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -61,28 +61,19 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                       await controller.buscarTodos();
                     },
                     child: ListView.builder(
-                      itemCount: controller.dogwalkers.length,
+                      itemCount: controller.cachorros.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
-                                onTap: () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    "/dogwalker/detail",
-                                    arguments: controller.dogwalkers[index].id,
-                                  );
-                                },
                                 title: Text(
-                                  controller.dogwalkers[index].nome!,
-                                  style: TextStyles.buttonBoldGray,
+                                  controller.cachorros[index].nome!,
+                                  style: TextStyles.titleListTile,
                                 ),
-                                subtitle: StarRatingWidget(
-                                  rating:
-                                      controller.dogwalkers[index].avaliacao!,
-                                ),
+                                subtitle: Text(
+                                    controller.cachorros[index].raca!.nome!),
                                 leading: Container(
                                   height: 40,
                                   width: 40,
@@ -95,9 +86,16 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                                   ),
                                 ),
                                 trailing: Text(
-                                  "",
+                                  controller.cachorros[index].porte!.nome!,
                                   textDirection: TextDirection.rtl,
                                 ),
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/cachorro/detail",
+                                    arguments: controller.cachorros[index].id!,
+                                  );
+                                },
                               ),
                             ),
                             Padding(

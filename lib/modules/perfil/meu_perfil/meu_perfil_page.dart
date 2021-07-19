@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:tutor/modules/home/home_controller.dart';
-import 'package:tutor/modules/meu_perfil/meu_perfil_controller.dart';
-import 'package:tutor/modules/meu_perfil/foto_perfil.dart';
+import 'package:tutor/modules/perfil/meu_perfil/meu_perfil_controller.dart';
+import 'package:tutor/modules/perfil/foto_perfil/foto_perfil.dart';
 import 'package:tutor/shared/models/cidade_model.dart';
 import 'package:tutor/shared/models/estado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';

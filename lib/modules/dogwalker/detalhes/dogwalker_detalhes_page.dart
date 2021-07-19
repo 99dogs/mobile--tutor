@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/dogwalkers/dogwalker_detalhes_controller.dart';
+import 'package:tutor/modules/dogwalker/detalhes/dogwalker_detalhes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/home/home_controller.dart';
-import 'package:tutor/modules/meus_caes/detalhes_page_controller.dart';
+import 'package:tutor/modules/cachorro/meus_caes_list/detalhes_page_controller.dart';
 import 'package:tutor/repositories/cachorro_repository.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/cachorro_model.dart';

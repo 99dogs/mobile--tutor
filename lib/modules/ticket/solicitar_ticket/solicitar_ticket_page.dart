@@ -1,7 +1,7 @@
 import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
-import 'package:tutor/modules/meus_tickets/solicitar_ticket_controller.dart';
+import 'package:tutor/modules/ticket/solicitar_ticket/solicitar_ticket_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/forma_de_pagamento_model.dart';
 import 'package:tutor/shared/models/ticket_model.dart';

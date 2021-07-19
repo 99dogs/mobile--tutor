@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/dogwalkers/dogwalkers_list_widget.dart';
+import 'package:tutor/modules/dogwalker/dogwalkers_list/dogwalkers_list_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
 class DogwalkersPage extends StatefulWidget {

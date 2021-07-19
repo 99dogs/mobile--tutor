@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_tickets/meus_tickets_controller.dart';
+import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
+import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
+import 'package:tutor/shared/widgets/stars_rating/star_rating_widget.dart';
 
-class MeusTicketsListWidget extends StatefulWidget {
-  const MeusTicketsListWidget({Key? key}) : super(key: key);
+class DogwalkersListWidget extends StatefulWidget {
+  const DogwalkersListWidget({Key? key}) : super(key: key);
 
   @override
-  _MeusTicketsListWidgetState createState() => _MeusTicketsListWidgetState();
+  _DogwalkersListWidgetState createState() => _DogwalkersListWidgetState();
 }
 
-class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
-  final controller = MeusTicketsController();
-  final formatCurrency = NumberFormat.currency(locale: "pt_BR");
+class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
+  final controller = DogwalkersController();
 
   @override
   void initState() {
@@ -50,7 +49,7 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
               ),
             );
           } else if (state == StateEnum.success) {
-            if (controller.tickets.isNotEmpty) {
+            if (controller.dogwalkers.isNotEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -62,69 +61,42 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                       await controller.buscarTodos();
                     },
                     child: ListView.builder(
-                      itemCount: controller.tickets.length,
+                      itemCount: controller.dogwalkers.length,
                       itemBuilder: (context, index) {
-                        IconData icon;
-                        String formaPg =
-                            controller.tickets[index].formaDePagamento!.tipo!;
-
-                        if (formaPg == "1") {
-                          icon = Icons.picture_as_pdf_outlined;
-                        } else if (formaPg == "2") {
-                          icon = Icons.credit_card_outlined;
-                        } else if (formaPg == "3") {
-                          icon = Icons.request_quote_outlined;
-                        } else if (formaPg == "6") {
-                          icon = Icons.qr_code_2_outlined;
-                        } else {
-                          icon = Icons.article_outlined;
-                        }
-
-                        String statusPg = "";
-                        Color statusColor = AppColors.stroke;
-                        if (controller.tickets[index].pendente!) {
-                          statusPg = "Pendente";
-                          statusColor = Colors.amber;
-                        }
-
-                        if (controller.tickets[index].cancelado!) {
-                          statusPg = "Cancelado";
-                          statusColor = AppColors.delete;
-                        }
-
-                        if (controller.tickets[index].pago!) {
-                          statusPg = "Pago";
-                          statusColor = AppColors.success;
-                        }
-
                         return Column(
                           children: [
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
-                                onTap: () async {
+                                onTap: () {
                                   Navigator.pushReplacementNamed(
                                     context,
-                                    "/ticket/detail",
-                                    arguments: controller.tickets[index].id,
+                                    "/dogwalker/detail",
+                                    arguments: controller.dogwalkers[index].id,
                                   );
                                 },
                                 title: Text(
-                                  controller
-                                      .tickets[index].formaDePagamento!.nome!,
-                                  style: TextStyles.titleListTile,
+                                  controller.dogwalkers[index].nome!,
+                                  style: TextStyles.buttonBoldGray,
                                 ),
-                                subtitle: Text(
-                                    '${formatCurrency.format(controller.tickets[index].total!)} | $statusPg'),
+                                subtitle: StarRatingWidget(
+                                  rating:
+                                      controller.dogwalkers[index].avaliacao!,
+                                ),
                                 leading: Container(
                                   height: 40,
                                   width: 40,
-                                  child: Icon(icon),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage(AppImages.logoDogwalker),
+                                    ),
+                                  ),
                                 ),
                                 trailing: Text(
-                                  controller.getFormatedDate(
-                                      controller.tickets[index].criado!),
-                                  textAlign: TextAlign.right,
+                                  "",
+                                  textDirection: TextDirection.rtl,
                                 ),
                               ),
                             ),
@@ -136,7 +108,7 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                                 width: size.width,
                                 height: 5,
                                 decoration: BoxDecoration(
-                                  color: statusColor,
+                                  color: AppColors.success,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(50),
                                     bottomRight: Radius.circular(50),
@@ -157,7 +129,7 @@ class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
                 child: Center(
                   child: Container(
                     child: Text(
-                      "Você ainda não adquiriu nenhum ticket.",
+                      "Você ainda não cadastrou nenhum cão.",
                       style: TextStyles.input,
                     ),
                   ),

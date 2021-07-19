@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_caes/detalhes_page.dart';
-import 'package:tutor/modules/meus_caes/meus_caes_controller.dart';
+import 'package:tutor/modules/ticket/meus_tickets/meus_tickets_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
-class MeusCaesListWidget extends StatefulWidget {
-  const MeusCaesListWidget({Key? key}) : super(key: key);
+class MeusTicketsListWidget extends StatefulWidget {
+  const MeusTicketsListWidget({Key? key}) : super(key: key);
 
   @override
-  _MeusCaesListWidgetState createState() => _MeusCaesListWidgetState();
+  _MeusTicketsListWidgetState createState() => _MeusTicketsListWidgetState();
 }
 
-class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
-  final controller = MeusCaesController();
+class _MeusTicketsListWidgetState extends State<MeusTicketsListWidget> {
+  final controller = MeusTicketsController();
+  final formatCurrency = NumberFormat.currency(locale: "pt_BR");
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: ListView.builder(
-                  itemCount: 3,
+                  itemCount: 10,
                   itemBuilder: (context, index) {
                     return ShimmerListTileWidget();
                   },
@@ -49,7 +50,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
               ),
             );
           } else if (state == StateEnum.success) {
-            if (controller.cachorros.isNotEmpty) {
+            if (controller.tickets.isNotEmpty) {
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -61,41 +62,70 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                       await controller.buscarTodos();
                     },
                     child: ListView.builder(
-                      itemCount: controller.cachorros.length,
+                      itemCount: controller.tickets.length,
                       itemBuilder: (context, index) {
+                        IconData icon;
+                        String formaPg =
+                            controller.tickets[index].formaDePagamento!.tipo!;
+
+                        if (formaPg == "1") {
+                          icon = Icons.picture_as_pdf_outlined;
+                        } else if (formaPg == "2") {
+                          icon = Icons.credit_card_outlined;
+                        } else if (formaPg == "3") {
+                          icon = Icons.request_quote_outlined;
+                        } else if (formaPg == "6") {
+                          icon = Icons.qr_code_2_outlined;
+                        } else {
+                          icon = Icons.article_outlined;
+                        }
+
+                        String statusPg = "";
+                        Color statusColor = AppColors.stroke;
+                        if (controller.tickets[index].pendente!) {
+                          statusPg = "Pendente";
+                          statusColor = Colors.amber;
+                        }
+
+                        if (controller.tickets[index].cancelado!) {
+                          statusPg = "Cancelado";
+                          statusColor = AppColors.delete;
+                        }
+
+                        if (controller.tickets[index].pago!) {
+                          statusPg = "Pago";
+                          statusColor = AppColors.success;
+                        }
+
                         return Column(
                           children: [
                             Container(
                               color: AppColors.shape,
                               child: ListTile(
+                                onTap: () async {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/ticket/detail",
+                                    arguments: controller.tickets[index].id,
+                                  );
+                                },
                                 title: Text(
-                                  controller.cachorros[index].nome!,
+                                  controller
+                                      .tickets[index].formaDePagamento!.nome!,
                                   style: TextStyles.titleListTile,
                                 ),
                                 subtitle: Text(
-                                    controller.cachorros[index].raca!.nome!),
+                                    '${formatCurrency.format(controller.tickets[index].total!)} | $statusPg'),
                                 leading: Container(
                                   height: 40,
                                   width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage(AppImages.logoDogwalker),
-                                    ),
-                                  ),
+                                  child: Icon(icon),
                                 ),
                                 trailing: Text(
-                                  controller.cachorros[index].porte!.nome!,
-                                  textDirection: TextDirection.rtl,
+                                  controller.getFormatedDate(
+                                      controller.tickets[index].criado!),
+                                  textAlign: TextAlign.right,
                                 ),
-                                onTap: () {
-                                  Navigator.pushReplacementNamed(
-                                    context,
-                                    "/cachorro/detail",
-                                    arguments: controller.cachorros[index].id!,
-                                  );
-                                },
                               ),
                             ),
                             Padding(
@@ -106,7 +136,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                                 width: size.width,
                                 height: 5,
                                 decoration: BoxDecoration(
-                                  color: AppColors.success,
+                                  color: statusColor,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(50),
                                     bottomRight: Radius.circular(50),
@@ -127,7 +157,7 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                 child: Center(
                   child: Container(
                     child: Text(
-                      "Você ainda não cadastrou nenhum cão.",
+                      "Você ainda não adquiriu nenhum ticket.",
                       style: TextStyles.input,
                     ),
                   ),

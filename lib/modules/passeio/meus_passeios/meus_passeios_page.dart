@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/meus_passeios/meus_passeios_list_widget.dart';
+import 'package:tutor/modules/passeio/meus_passeios_list/meus_passeios_list_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
 class MeusPasseiosPage extends StatefulWidget {
