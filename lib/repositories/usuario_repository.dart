@@ -20,8 +20,8 @@ class UsuarioRepository {
     var headers = Map<String, String>();
     UsuarioLogadoModel usuario = await _authController.obterSessao();
 
-    if (_token.isEmpty) {
-      _token = usuario.token ?? "";
+    if (usuario.token != null && usuario.token!.isNotEmpty) {
+      _token = usuario.token!;
     }
 
     if (_token.isEmpty) {

@@ -16,7 +16,7 @@ class EstadoRepository {
     var headers = Map<String, String>();
     UsuarioLogadoModel usuario = await _authController.obterSessao();
 
-    if (_token.isEmpty) {
+    if (usuario.token != null && usuario.token!.isNotEmpty) {
       _token = usuario.token!;
     }
 

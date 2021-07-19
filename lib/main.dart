@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tutor/modules/agenda/agenda_page.dart';
 import 'package:tutor/modules/dogwalkers/dogwalker_detalhes_page.dart';
 import 'package:tutor/modules/dogwalkers/dogwalkers_page.dart';
@@ -17,6 +18,11 @@ import 'package:tutor/modules/splash/splash_page.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: AppColors.primary,
+    ),
+  );
   runApp(MyApp());
 }
 
