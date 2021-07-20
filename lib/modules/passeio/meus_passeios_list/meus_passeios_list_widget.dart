@@ -79,44 +79,53 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
 
                         return Column(
                           children: [
-                            Container(
-                              color: AppColors.shape,
-                              child: ListTile(
-                                title: Text(
-                                  controller.passeios[index].dogwalker!.nome!,
-                                  style: TextStyles.buttonBoldGray,
-                                ),
-                                subtitle: Text.rich(
-                                  TextSpan(
-                                    text: "#" +
-                                        controller.passeios[index].id!
-                                            .toString() +
-                                        " | ",
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            controller.passeios[index].status!,
-                                      )
-                                    ],
+                            GestureDetector(
+                              child: Container(
+                                color: AppColors.shape,
+                                child: ListTile(
+                                  title: Text(
+                                    controller.passeios[index].dogwalker!.nome!,
+                                    style: TextStyles.buttonBoldGray,
                                   ),
-                                ),
-                                leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage(AppImages.logoDogwalker),
+                                  subtitle: Text.rich(
+                                    TextSpan(
+                                      text: "#" +
+                                          controller.passeios[index].id!
+                                              .toString() +
+                                          " | ",
+                                      children: [
+                                        TextSpan(
+                                          text: controller
+                                              .passeios[index].status!,
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                trailing: Text(
-                                  controller.getFormatedDate(
-                                      controller.passeios[index].datahora!),
-                                  textDirection: TextDirection.rtl,
+                                  leading: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage(AppImages.logoDogwalker),
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    controller.getFormatedDate(
+                                        controller.passeios[index].datahora!),
+                                    textDirection: TextDirection.rtl,
+                                  ),
                                 ),
                               ),
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/passeio/detail",
+                                  arguments: controller.passeios[index].id!,
+                                );
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
