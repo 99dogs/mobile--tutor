@@ -25,32 +25,6 @@ class _MeusCaesPageState extends State<MeusCaesPage> {
             title: "Meus cães",
           ),
           MeusCaesListWidget(),
-          ValueListenableBuilder(
-            valueListenable: controller.state,
-            builder: (_, value, __) {
-              StateEnum state = value as StateEnum;
-              if (state == StateEnum.success) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: FloatingActionButton(
-                        child: const Icon(Icons.add),
-                        backgroundColor: AppColors.successSecondary,
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                              context, "/cachorro/add");
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
         ],
       ),
     );

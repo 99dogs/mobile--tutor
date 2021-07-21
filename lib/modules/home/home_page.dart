@@ -112,6 +112,29 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ),
+        floatingActionButton: ValueListenableBuilder(
+          valueListenable: homeController.paginaAtual,
+          builder: (_, currentPage, __) {
+            if (currentPage == 0 || currentPage == 3 || currentPage == 4) {
+              return FloatingActionButton(
+                onPressed: () {
+                  if (currentPage == 0) {
+                    Navigator.pushReplacementNamed(context, "/passeio/add");
+                  }
+                  if (currentPage == 3) {
+                    Navigator.pushReplacementNamed(context, "/cachorro/add");
+                  }
+                  if (currentPage == 4) {
+                    Navigator.pushReplacementNamed(context, "/ticket/add");
+                  }
+                },
+                child: Icon(Icons.add),
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
         bottomNavigationBar: BottomNavigationBarWidget(
           paginaAtual: homeController.paginaAtual.value,
         ),

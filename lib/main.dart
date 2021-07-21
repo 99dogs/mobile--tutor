@@ -7,6 +7,7 @@ import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
 import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_page.dart';
+import 'package:tutor/modules/passeio/solicitar_passeio/solicitar_passeio_page.dart';
 import 'package:tutor/modules/perfil/meu_perfil/meu_perfil_page.dart';
 import 'package:tutor/modules/cachorro/alterar_cao/alterar_cao_page.dart';
 import 'package:tutor/modules/cachorro/cadastrar_cao/cadastrar_cao_page.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         "/perfil": (context) => MeuPerfilPage(),
         "/agenda": (context) => AgendaPage(),
         "/passeio/list": (context) => MeusPasseiosPage(),
+        "/passeio/add": (context) => SolicitarPasseioPage(),
         "/passeio/detail": (context) => PasseioDetalhesPage(
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),

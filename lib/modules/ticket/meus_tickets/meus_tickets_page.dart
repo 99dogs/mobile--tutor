@@ -21,21 +21,6 @@ class _MeusTicketsPageState extends State<MeusTicketsPage> {
             title: "Meus tickets",
           ),
           MeusTicketsListWidget(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: FloatingActionButton(
-                  child: const Icon(Icons.add),
-                  backgroundColor: AppColors.successSecondary,
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/ticket/add");
-                  },
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

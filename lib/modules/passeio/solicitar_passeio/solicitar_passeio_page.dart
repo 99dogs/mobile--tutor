@@ -32,11 +32,11 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
       bottomNavigationBar: BottomButtonsWidget(
         primaryLabel: "Cancelar",
         primaryOnPressed: () {
-          Navigator.pushReplacementNamed(context, "/passeio/list");
+          Navigator.pushReplacementNamed(context, "/home");
         },
         secondaryLabel: "Solicitar",
         secondaryOnPressed: () {
-          Navigator.pushReplacementNamed(context, "/passeio/list");
+          Navigator.pushReplacementNamed(context, "/home");
         },
         enableSecondaryColor: true,
       ),
