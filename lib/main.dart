@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:tutor/modules/agenda/agenda_page.dart';
 import 'package:tutor/modules/dogwalker/detalhes/dogwalker_detalhes_page.dart';
 import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_page.dart';
@@ -18,7 +19,10 @@ import 'package:tutor/modules/ticket/solicitar_ticket/solicitar_ticket_page.dart
 import 'package:tutor/modules/splash/splash_page.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+  await FlutterConfig.loadEnvVariables();
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: AppColors.primary,

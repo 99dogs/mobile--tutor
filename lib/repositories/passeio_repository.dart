@@ -58,4 +58,34 @@ class PasseioRepository {
       throw (e);
     }
   }
+
+  Future<PasseioModel> buscarPorId(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/passeio/" + id.toString(),
+      );
+
+      var response = await _client.get(
+        url,
+        headers: await this.headers(),
+      );
+
+      PasseioModel passeio = PasseioModel.fromJson(
+        jsonDecode(response.body),
+      );
+
+      if (response.statusCode == 200) {
+        return passeio;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }

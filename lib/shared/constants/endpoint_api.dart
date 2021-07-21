@@ -1,3 +1,3 @@
 class EndpointApi {
-  String urlApi = "https://dc662bc119b5.ngrok.io";
+  String urlApi = "https://5b9562df8438.ngrok.io";
 }
