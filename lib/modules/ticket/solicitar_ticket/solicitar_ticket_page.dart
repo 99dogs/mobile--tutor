@@ -112,7 +112,7 @@ class _SolicitarTicketPageState extends State<SolicitarTicketPage> {
                                       },
                                     ),
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DropdownButtonFormField(
                                         validator:
                                             TicketModel().validarFormaPagamento,
