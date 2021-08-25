@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tutor/modules/ticket/meu_saldo_tile/meu_saldo_tile_widget.dart';
 import 'package:tutor/modules/ticket/meus_tickets_list/meus_tickets_list_widget.dart';
-import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
 class MeusTicketsPage extends StatefulWidget {
@@ -20,6 +20,7 @@ class _MeusTicketsPageState extends State<MeusTicketsPage> {
           TitlePageWidget(
             title: "Meus tickets",
           ),
+          MeuSaldoTileWidget(),
           MeusTicketsListWidget(),
         ],
       ),
