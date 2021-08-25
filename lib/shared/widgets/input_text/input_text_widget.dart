@@ -28,7 +28,7 @@ class InputTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedCard(
-      direction: AnimatedCardDirection.left,
+      direction: AnimatedCardDirection.right,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Column(

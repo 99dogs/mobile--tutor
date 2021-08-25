@@ -117,7 +117,13 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                "/passeio/add",
+                                arguments: controller.dogwalker.id,
+                              );
+                            },
                             icon: Icon(
                               Icons.calendar_today_outlined,
                               size: 19,

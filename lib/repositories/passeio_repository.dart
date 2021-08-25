@@ -5,6 +5,7 @@ import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/constants/endpoint_api.dart';
 import 'package:tutor/shared/models/passeio_model.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
+import 'package:tutor/shared/models/solicitar_passeio_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 
 class PasseioRepository {
@@ -75,6 +76,37 @@ class PasseioRepository {
       );
 
       if (response.statusCode == 200) {
+        return passeio;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<PasseioModel> solicitar(SolicitarPasseioModel solicitacao) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi.urlApi + "/api/v1/passeio",
+      );
+
+      var response = await _client.post(
+        url,
+        headers: await this.headers(),
+        body: jsonEncode(solicitacao),
+      );
+
+      if (response.statusCode == 200) {
+        PasseioModel passeio = PasseioModel.fromJson(
+          jsonDecode(response.body),
+        );
+
         return passeio;
       } else if (response.statusCode == 402 || response.statusCode == 502) {
         throw ("Ocorreu um problema inesperado.");

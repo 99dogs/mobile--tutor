@@ -52,7 +52,9 @@ class MyApp extends StatelessWidget {
         "/perfil": (context) => MeuPerfilPage(),
         "/agenda": (context) => AgendaPage(),
         "/passeio/list": (context) => MeusPasseiosPage(),
-        "/passeio/add": (context) => SolicitarPasseioPage(),
+        "/passeio/add": (context) => SolicitarPasseioPage(
+              dogwalkerId: ModalRoute.of(context)!.settings.arguments as int,
+            ),
         "/passeio/detail": (context) => PasseioDetalhesPage(
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),

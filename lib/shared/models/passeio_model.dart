@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 import 'package:tutor/shared/models/cachorro_model.dart';
@@ -12,6 +14,7 @@ class PasseioModel {
   String? datahorafinalizacao;
   int? dogwalkerId;
   int? tutorId;
+  List<dynamic>? cachorrosIds;
   List<CachorroModel>? cachorros;
   UsuarioModel? dogwalker;
   UsuarioModel? tutor;
@@ -25,6 +28,7 @@ class PasseioModel {
     this.datahorafinalizacao,
     this.dogwalkerId,
     this.tutorId,
+    this.cachorrosIds,
     this.cachorros,
     this.dogwalker,
     this.tutor,
@@ -83,6 +87,7 @@ class PasseioModel {
     String? datahorafinalizacao,
     int? dogwalkerId,
     int? tutorId,
+    List<dynamic>? cachorrosIds,
     List<CachorroModel>? cachorros,
     UsuarioModel? dogwalker,
     UsuarioModel? tutor,
@@ -96,6 +101,7 @@ class PasseioModel {
       datahorafinalizacao: datahorafinalizacao ?? this.datahorafinalizacao,
       dogwalkerId: dogwalkerId ?? this.dogwalkerId,
       tutorId: tutorId ?? this.tutorId,
+      cachorrosIds: cachorrosIds ?? this.cachorrosIds,
       cachorros: cachorros ?? this.cachorros,
       dogwalker: dogwalker ?? this.dogwalker,
       tutor: tutor ?? this.tutor,
@@ -112,6 +118,7 @@ class PasseioModel {
       'datahorafinalizacao': datahorafinalizacao,
       'dogwalkerId': dogwalkerId,
       'tutorId': tutorId,
+      'cachorrosIds': cachorrosIds,
       'cachorros': cachorros?.map((x) => x.toMap()).toList(),
       'dogwalker': dogwalker?.toMap(),
       'tutor': tutor?.toMap(),
@@ -128,6 +135,7 @@ class PasseioModel {
       datahorafinalizacao: map['datahorafinalizacao'],
       dogwalkerId: map['dogwalkerId'],
       tutorId: map['tutorId'],
+      cachorrosIds: List<dynamic>.from(map['cachorrosIds']),
       cachorros: List<CachorroModel>.from(
           map['cachorros']?.map((x) => CachorroModel.fromMap(x))),
       dogwalker: UsuarioModel.fromMap(map['dogwalker']),
@@ -137,7 +145,7 @@ class PasseioModel {
 
   @override
   String toString() {
-    return 'PasseioModel(id: $id, criado: $criado, modificado: $modificado, datahora: $datahora, status: $status, datahorafinalizacao: $datahorafinalizacao, dogwalkerId: $dogwalkerId, tutorId: $tutorId, cachorros: $cachorros, dogwalker: $dogwalker, tutor: $tutor)';
+    return 'PasseioModel(id: $id, criado: $criado, modificado: $modificado, datahora: $datahora, status: $status, datahorafinalizacao: $datahorafinalizacao, dogwalkerId: $dogwalkerId, tutorId: $tutorId, cachorrosIds: $cachorrosIds, cachorros: $cachorros, dogwalker: $dogwalker, tutor: $tutor)';
   }
 
   @override
@@ -153,6 +161,7 @@ class PasseioModel {
         other.datahorafinalizacao == datahorafinalizacao &&
         other.dogwalkerId == dogwalkerId &&
         other.tutorId == tutorId &&
+        listEquals(other.cachorrosIds, cachorrosIds) &&
         listEquals(other.cachorros, cachorros) &&
         other.dogwalker == dogwalker &&
         other.tutor == tutor;
@@ -168,6 +177,7 @@ class PasseioModel {
         datahorafinalizacao.hashCode ^
         dogwalkerId.hashCode ^
         tutorId.hashCode ^
+        cachorrosIds.hashCode ^
         cachorros.hashCode ^
         dogwalker.hashCode ^
         tutor.hashCode;
