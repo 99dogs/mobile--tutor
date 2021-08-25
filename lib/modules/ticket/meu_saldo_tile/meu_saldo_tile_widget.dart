@@ -43,7 +43,6 @@ class _MeuSaldoTileWidgetState extends State<MeuSaldoTileWidget> {
         builder: (_, value, __) {
           StateEnum state = value as StateEnum;
           if (state == StateEnum.success) {
-            print(state);
             return AnimatedCard(
               direction: AnimatedCardDirection.top,
               child: Padding(

@@ -56,15 +56,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   automaticallyImplyLeading: false,
-                  title: Text.rich(
-                    TextSpan(
-                      style: TextStyles.titleBoldBackground,
-                      text: "Olá, ",
-                      children: [
-                        TextSpan(text: _usuario.nome),
-                      ],
-                    ),
-                  ),
                   actions: [
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
