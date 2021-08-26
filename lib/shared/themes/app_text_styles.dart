@@ -123,4 +123,14 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.primary,
   );
+  static final buttonWhite = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppColors.background,
+  );
+  static final textError = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: AppColors.delete,
+  );
 }

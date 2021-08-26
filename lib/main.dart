@@ -6,6 +6,8 @@ import 'package:tutor/modules/dogwalker/detalhes/dogwalker_detalhes_page.dart';
 import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
+import 'package:tutor/modules/register/register_page.dart';
+import 'package:tutor/modules/signin/signin_page.dart';
 import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_page.dart';
 import 'package:tutor/modules/passeio/solicitar_passeio/solicitar_passeio_page.dart';
 import 'package:tutor/modules/perfil/meu_perfil/meu_perfil_page.dart';
@@ -47,7 +49,9 @@ class MyApp extends StatelessWidget {
       home: AgendaPage(),
       routes: {
         "/splash": (context) => SplashPage(),
+        "/signin": (context) => SignInPage(),
         "/login": (context) => LoginPage(),
+        "/register": (context) => RegisterPage(),
         "/home": (context) => HomePage(),
         "/perfil": (context) => MeuPerfilPage(),
         "/agenda": (context) => AgendaPage(),

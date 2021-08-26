@@ -4,27 +4,33 @@ import 'package:tutor/repositories/usuario_repository.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
-import 'package:tutor/shared/models/usuario_login_model.dart';
+import 'package:tutor/shared/models/usuario_registro_model.dart';
 
-class LoginController {
+class RegisterController {
   final _usuarioRepository = UsuarioRepository();
   final formKey = GlobalKey<FormState>();
   final authController = AuthController();
 
-  UsuarioLogin model = UsuarioLogin();
+  UsuarioRegistroModel model = UsuarioRegistroModel();
 
   final state = ValueNotifier<StateEnum>(StateEnum.start);
   final errorException = ValueNotifier<String>("");
 
   void onChange({
+    String? nome,
     String? email,
     String? senha,
   }) {
     model = model.copyWith(
+      nome: nome,
       email: email,
       senha: senha,
+      tipo: "tutor",
     );
   }
+
+  String? validarNome(String? value) =>
+      value?.isEmpty ?? true ? "O campo nome não poder vazio." : null;
 
   String? validarEmail(String? value) =>
       value?.isEmpty ?? true ? "O campo e-mail não poder vazio." : null;
@@ -39,7 +45,7 @@ class LoginController {
       try {
         errorException.value = "";
         state.value = StateEnum.loading;
-        UsuarioLogadoModel usuario = await _usuarioRepository.login(model);
+        UsuarioLogadoModel usuario = await _usuarioRepository.registrar(model);
         await authController.salvarSessao(usuario);
         state.value = StateEnum.success;
         Navigator.pushReplacementNamed(context, "/home");
@@ -78,4 +84,7 @@ class LoginController {
   Future<void> _delay() async {
     await Future.delayed(Duration(seconds: 3));
   }
+
+  String termos =
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 }

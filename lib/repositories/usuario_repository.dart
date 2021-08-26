@@ -9,6 +9,7 @@ import 'package:tutor/shared/models/usuario_autenticado_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/models/usuario_login_model.dart';
 import 'package:tutor/shared/models/usuario_model.dart';
+import 'package:tutor/shared/models/usuario_registro_model.dart';
 
 class UsuarioRepository {
   final _endpointApi = EndpointApi();
@@ -36,13 +37,51 @@ class UsuarioRepository {
     return headers;
   }
 
+  Future<UsuarioLogadoModel> registrar(
+      UsuarioRegistroModel usuarioRegistro) async {
+    try {
+      var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/registrar");
+      var response = await _client.post(
+        url,
+        body: usuarioRegistro.toJson(),
+        headers: await this.headers(),
+      );
+
+      if (response.statusCode == 200) {
+        UsuarioAutenticadoModel usuarioAutenticado =
+            UsuarioAutenticadoModel.fromJson(response.body);
+
+        _token = usuarioAutenticado.token;
+
+        UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel(
+          id: usuarioAutenticado.id,
+          nome: usuarioRegistro.nome,
+          token: _token,
+        );
+
+        return usuarioLogado;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
   Future<UsuarioLogadoModel> login(UsuarioLogin usuarioLogin) async {
     try {
+      Map<String, String> headers = await this.headers();
+
       var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/login");
       var response = await _client.post(
         url,
         body: usuarioLogin.toJson(),
-        headers: await this.headers(),
+        headers: headers,
       );
 
       if (response.statusCode == 200) {

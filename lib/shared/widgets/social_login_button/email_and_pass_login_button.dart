@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 
-class GoogleSocialLoginButton extends StatelessWidget {
+class EmailAndPassLoginButton extends StatelessWidget {
   final VoidCallback onTap;
-  const GoogleSocialLoginButton({Key? key, required this.onTap})
+  const EmailAndPassLoginButton({Key? key, required this.onTap})
       : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class GoogleSocialLoginButton extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Icon(
-                      FontAwesomeIcons.google,
+                      FontAwesomeIcons.envelope,
                       size: 22,
                     ),
                   ),
@@ -44,7 +44,7 @@ class GoogleSocialLoginButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Entrar com Google",
+                    "Entrar com e-mail",
                     style: TextStyles.buttonGray,
                   ),
                 ],

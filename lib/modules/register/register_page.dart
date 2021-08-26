@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/login/login_controller.dart';
+import 'package:tutor/modules/register/register_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/usuario_login_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/input_text/input_text_widget.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final controller = LoginController();
+class _RegisterPageState extends State<RegisterPage> {
+  final controller = RegisterController();
 
   UsuarioLogin usuarioLogin = UsuarioLogin();
 
+  final _controllerNome = TextEditingController();
   final _controllerEmail = TextEditingController();
   final _controllerSenha = TextEditingController();
 
   @override
   void dispose() {
+    _controllerNome.dispose();
     _controllerEmail.dispose();
     _controllerSenha.dispose();
     super.dispose();
@@ -42,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
             Positioned(
               top: size.height * 0.2,
               child: Container(
-                height: size.height * 0.62,
+                height: size.height * 0.77,
                 width: size.width - 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -80,7 +83,16 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: [
                             InputTextWidget(
-                              label: "Digite seu e-mail.",
+                              label: "Qual é o seu nome?",
+                              icon: Icons.person,
+                              controller: _controllerNome,
+                              validator: controller.validarNome,
+                              onChanged: (value) {
+                                controller.onChange(nome: value);
+                              },
+                            ),
+                            InputTextWidget(
+                              label: "Informe seu melhor e-mail.",
                               icon: Icons.email_outlined,
                               controller: _controllerEmail,
                               validator: controller.validarEmail,
@@ -89,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                               },
                             ),
                             InputTextWidget(
-                              label: "Digite sua senha.",
+                              label: "Escolha uma senha forte.",
                               icon: Icons.lock_outline,
                               obscureText: true,
                               controller: _controllerSenha,
@@ -108,7 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                                     child: Container(
                                       child: Text(
                                         error,
-                                        style: TextStyles.textError,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyles.titleListTile,
                                       ),
                                     ),
                                   );
@@ -139,9 +152,42 @@ class _LoginPageState extends State<LoginPage> {
                                 } else {
                                   return ElevatedButton(
                                     onPressed: () {
-                                      controller.autenticar(context);
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          // retorna um objeto do tipo Dialog
+                                          return AlertDialog(
+                                            title: Text(
+                                                "Termos e condições de uso."),
+                                            content: SingleChildScrollView(
+                                              child: Container(
+                                                child: Text(controller.termos),
+                                              ),
+                                            ),
+                                            actions: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: AppColors.delete,
+                                                ),
+                                                child: Text("Não concordo"),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  controller
+                                                      .autenticar(context);
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text("Concordo"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     },
-                                    child: Text("Entrar"),
+                                    child: Text("Cadastrar"),
                                   );
                                 }
                               },

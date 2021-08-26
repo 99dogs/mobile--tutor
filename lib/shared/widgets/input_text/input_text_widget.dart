@@ -12,6 +12,7 @@ class InputTextWidget extends StatelessWidget {
   final void Function(String value) onChanged;
   final TextInputType? textInputType;
   final bool enable;
+  final bool obscureText;
 
   const InputTextWidget({
     Key? key,
@@ -23,6 +24,7 @@ class InputTextWidget extends StatelessWidget {
     required this.onChanged,
     this.textInputType,
     this.enable = true,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class InputTextWidget extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              obscureText: obscureText,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               enabled: enable,
               keyboardType: textInputType,

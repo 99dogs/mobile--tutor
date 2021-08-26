@@ -3,10 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 
-class GoogleSocialLoginButton extends StatelessWidget {
+class RegisterButton extends StatelessWidget {
   final VoidCallback onTap;
-  const GoogleSocialLoginButton({Key? key, required this.onTap})
-      : super(key: key);
+  const RegisterButton({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +14,10 @@ class GoogleSocialLoginButton extends StatelessWidget {
       child: Container(
         height: 56,
         decoration: BoxDecoration(
-          color: AppColors.shape,
+          color: AppColors.secondary,
           borderRadius: BorderRadius.circular(5),
           border: Border.fromBorderSide(
-            BorderSide(color: AppColors.stroke),
+            BorderSide(color: AppColors.secondary),
           ),
         ),
         child: Row(
@@ -31,7 +30,8 @@ class GoogleSocialLoginButton extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Icon(
-                      FontAwesomeIcons.google,
+                      FontAwesomeIcons.signInAlt,
+                      color: Colors.white,
                       size: 22,
                     ),
                   ),
@@ -44,8 +44,8 @@ class GoogleSocialLoginButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Entrar com Google",
-                    style: TextStyles.buttonGray,
+                    "Quero me cadastrar",
+                    style: TextStyles.buttonWhite,
                   ),
                 ],
               ),
