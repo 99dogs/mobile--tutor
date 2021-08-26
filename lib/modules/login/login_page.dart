@@ -6,6 +6,7 @@ import 'package:tutor/shared/models/usuario_login_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/input_text/input_text_widget.dart';
+import 'package:tutor/shared/widgets/social_login_button/register_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
             Positioned(
               top: size.height * 0.2,
               child: Container(
-                height: size.height * 0.62,
                 width: size.width - 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -150,27 +150,40 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              "/signin",
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: AppColors.heading,
-                          ),
-                          icon: Icon(
-                            FontAwesomeIcons.arrowLeft,
-                            size: 14,
-                          ),
-                          label: Text("Retornar"),
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 50,
+                        horizontal: 70,
+                      ),
+                      child: RegisterButton(
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, "/register");
+                        },
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        children: [
+                          Divider(),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                "/signin",
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              child: Text(
+                                "Voltar",
+                                style: TextStyles.titleListTile,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

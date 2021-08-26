@@ -164,6 +164,7 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                                 label: "Telefone",
                                 icon: Icons.phone,
                                 controller: telefoneInputTextController,
+                                textInputType: TextInputType.number,
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "O campo telefone não pode ser vazio.";
@@ -431,6 +432,12 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(controller.errorException.value),
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Informações alteradas com sucesso."),
                 ),
               );
             }

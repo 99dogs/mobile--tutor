@@ -12,7 +12,8 @@ class RegisterButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 56,
+        height: 45,
+        width: 200,
         decoration: BoxDecoration(
           color: AppColors.secondary,
           borderRadius: BorderRadius.circular(5),
@@ -32,7 +33,7 @@ class RegisterButton extends StatelessWidget {
                     child: Icon(
                       FontAwesomeIcons.signInAlt,
                       color: Colors.white,
-                      size: 22,
+                      size: 18,
                     ),
                   ),
                 ],
@@ -44,7 +45,7 @@ class RegisterButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Quero me cadastrar",
+                    "Crie uma conta",
                     style: TextStyles.buttonWhite,
                   ),
                 ],

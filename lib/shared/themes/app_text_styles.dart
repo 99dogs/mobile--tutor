@@ -133,4 +133,9 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.delete,
   );
+  static final titleLogoWhite = GoogleFonts.montserrat(
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
+  );
 }

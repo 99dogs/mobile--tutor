@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:tutor/modules/login/login_controller.dart';
+import 'package:tutor/modules/signin/signin_controller.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/social_login_button/email_and_pass_login_button.dart';
 import 'package:tutor/shared/widgets/social_login_button/google_social_login_button.dart';
-import 'package:tutor/shared/widgets/social_login_button/register_button.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -14,8 +15,17 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final loginController = LoginController();
+
+  @override
+  void initState() {
+    loginController.validarSessao(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final signinController = SigninController();
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -25,9 +35,8 @@ class _SignInPageState extends State<SignInPage> {
           alignment: AlignmentDirectional.center,
           children: [
             Positioned(
-              top: size.height * 0.2,
+              top: size.height * 0.3,
               child: Container(
-                height: size.height * 0.6,
                 width: size.width - 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -46,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                             style: TextStyles.titleLogo,
                           ),
                           Text(
-                            "Melhor lugar para encontrar dogwalkers.",
+                            "Escolha uma das opções de acesso ao app.",
                             style: TextStyles.captionBoldBody,
                           ),
                         ],
@@ -75,20 +84,21 @@ class _SignInPageState extends State<SignInPage> {
                         horizontal: 70,
                       ),
                       child: GoogleSocialLoginButton(
-                        onTap: () {},
-                      ),
-                    ),
-                    Divider(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 30,
-                        horizontal: 70,
-                      ),
-                      child: RegisterButton(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, "/register");
+                        onTap: () async {
+                          String? response =
+                              await signinController.googleSignIn(context);
+                          if (response != null && response.isNotEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(response),
+                              ),
+                            );
+                          }
                         },
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 55),
                     ),
                   ],
                 ),

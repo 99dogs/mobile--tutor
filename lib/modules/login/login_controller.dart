@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutor/repositories/usuario_repository.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
@@ -54,16 +55,9 @@ class LoginController {
   void validarSessao(BuildContext context) async {
     UsuarioLogadoModel usuario = UsuarioLogadoModel();
     usuario = await authController.obterSessao();
-    await _delay();
 
-    try {
-      if (usuario.token!.isNotEmpty) {
-        Navigator.pushReplacementNamed(context, "/home");
-      } else {
-        Navigator.pushReplacementNamed(context, "/signin");
-      }
-    } catch (e) {
-      Navigator.pushReplacementNamed(context, "/signin");
+    if (usuario.token != null && usuario.token!.isNotEmpty) {
+      Navigator.pushReplacementNamed(context, "/home");
     }
   }
 
@@ -71,11 +65,9 @@ class LoginController {
     final instance = await SharedPreferences.getInstance();
     if (instance.containsKey("usuario")) {
       await instance.setString("usuario", "");
+      GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+      _googleSignIn.signOut();
       Navigator.pushReplacementNamed(context, "/signin");
     }
-  }
-
-  Future<void> _delay() async {
-    await Future.delayed(Duration(seconds: 3));
   }
 }

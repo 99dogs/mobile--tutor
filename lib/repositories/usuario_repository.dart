@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutor/shared/auth/auth_controller.dart';
-import 'package:tutor/shared/constants/endpoint_api.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/usuario_alterar_dados_model.dart';
 import 'package:tutor/shared/models/usuario_autenticado_model.dart';
@@ -10,9 +10,10 @@ import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/models/usuario_login_model.dart';
 import 'package:tutor/shared/models/usuario_model.dart';
 import 'package:tutor/shared/models/usuario_registro_model.dart';
+import 'package:tutor/shared/models/usuario_social_login_model.dart';
 
 class UsuarioRepository {
-  final _endpointApi = EndpointApi();
+  final _endpointApi = dotenv.get('ENDPOINT_API', fallback: '');
   final _authController = AuthController();
   var _client = http.Client();
   String _token = "";
@@ -40,7 +41,7 @@ class UsuarioRepository {
   Future<UsuarioLogadoModel> registrar(
       UsuarioRegistroModel usuarioRegistro) async {
     try {
-      var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/registrar");
+      var url = Uri.parse(_endpointApi + "/api/v1/usuario/registrar");
       var response = await _client.post(
         url,
         body: usuarioRegistro.toJson(),
@@ -77,7 +78,7 @@ class UsuarioRepository {
     try {
       Map<String, String> headers = await this.headers();
 
-      var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/login");
+      var url = Uri.parse(_endpointApi + "/api/v1/usuario/login");
       var response = await _client.post(
         url,
         body: usuarioLogin.toJson(),
@@ -114,7 +115,7 @@ class UsuarioRepository {
 
   Future<UsuarioModel> buscarMinhasInformacoes() async {
     try {
-      var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/me");
+      var url = Uri.parse(_endpointApi + "/api/v1/usuario/me");
       var response = await _client.get(url, headers: await this.headers());
 
       if (response.statusCode == 200) {
@@ -136,7 +137,7 @@ class UsuarioRepository {
   Future<void> alterarMinhasInformacoes(
       UsuarioAlterarDadosModel usuario) async {
     try {
-      var url = Uri.parse(_endpointApi.urlApi + "/api/v1/usuario/dados");
+      var url = Uri.parse(_endpointApi + "/api/v1/usuario/dados");
       var response = await _client.put(url,
           headers: await this.headers(), body: usuario.toJson());
 
@@ -156,7 +157,7 @@ class UsuarioRepository {
   Future<List<UsuarioModel>> buscarDogwalkers() async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/usuario/dogwalker",
+        _endpointApi + "/api/v1/usuario/dogwalker",
       );
       var response = await _client.get(url, headers: await this.headers());
 
@@ -182,7 +183,7 @@ class UsuarioRepository {
   Future<UsuarioModel> buscarPorId(int id) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/usuario/dogwalker/" + id.toString(),
+        _endpointApi + "/api/v1/usuario/dogwalker/" + id.toString(),
       );
       var response = await _client.get(url, headers: await this.headers());
 
@@ -192,6 +193,46 @@ class UsuarioRepository {
         );
 
         return dogwalker;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<UsuarioLogadoModel> socialLogin(
+      UsuarioSocialLogin usuarioLogin) async {
+    try {
+      Map<String, String> headers = await this.headers();
+
+      var url = Uri.parse(_endpointApi + "/api/v1/usuario/social-login");
+      var response = await _client.post(
+        url,
+        body: usuarioLogin.toJson(),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        UsuarioAutenticadoModel usuarioAutenticado =
+            UsuarioAutenticadoModel.fromJson(response.body);
+
+        _token = usuarioAutenticado.token;
+
+        UsuarioModel usuario = await buscarMinhasInformacoes();
+
+        UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel(
+          id: usuario.id,
+          nome: usuario.nome,
+          token: _token,
+        );
+
+        return usuarioLogado;
       } else if (response.statusCode == 402 || response.statusCode == 502) {
         throw ("Ocorreu um problema inesperado.");
       } else {

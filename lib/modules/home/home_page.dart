@@ -9,7 +9,6 @@ import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_images.dart';
-import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_widget.dart';
 import 'package:tutor/shared/widgets/drawer/drawer_widget.dart';
 
@@ -46,6 +45,13 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 _usuario = snapshot.data as UsuarioLogadoModel;
+                String fotoUrl = "";
+                if (_usuario.fotoUrl!.isNotEmpty) {
+                  fotoUrl = _usuario.fotoUrl!;
+                } else {
+                  fotoUrl =
+                      "https://cdn4.iconfinder.com/data/icons/user-people-2/48/5-512.png";
+                }
                 return AppBar(
                   elevation: 0,
                   brightness: Brightness.dark,
@@ -78,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 borderRadius: BorderRadius.circular(50),
                                 image: DecorationImage(
-                                  image: AssetImage(AppImages.logoDogwalker),
+                                  image: NetworkImage(fotoUrl),
                                 ),
                               ),
                             ),

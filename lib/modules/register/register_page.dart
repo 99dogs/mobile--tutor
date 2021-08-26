@@ -45,7 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
             Positioned(
               top: size.height * 0.2,
               child: Container(
-                height: size.height * 0.77,
                 width: size.width - 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -196,27 +195,33 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              "/signin",
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: AppColors.heading,
-                          ),
-                          icon: Icon(
-                            FontAwesomeIcons.arrowLeft,
-                            size: 14,
-                          ),
-                          label: Text("Retornar"),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
+                          children: [
+                            Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/login",
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                                child: Text(
+                                  "Voltar",
+                                  style: TextStyles.titleListTile,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

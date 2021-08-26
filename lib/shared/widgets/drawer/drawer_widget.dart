@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
+import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -18,11 +18,13 @@ class DrawerWidget extends StatelessWidget {
           DrawerHeader(
             decoration: BoxDecoration(
               color: AppColors.primary,
-              image: DecorationImage(
-                image: AssetImage(AppImages.logoDogwalker),
+            ),
+            child: Center(
+              child: Text(
+                '99Dogs',
+                style: TextStyles.titleLogoWhite,
               ),
             ),
-            child: Text(''),
           ),
           ListTile(
             leading: Icon(Icons.book_outlined),

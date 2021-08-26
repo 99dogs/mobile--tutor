@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tutor/shared/auth/auth_controller.dart';
+import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_images.dart';
 
-class FotoPerfil extends StatelessWidget {
+class FotoPerfil extends StatefulWidget {
   const FotoPerfil({Key? key}) : super(key: key);
+
+  @override
+  _FotoPerfilState createState() => _FotoPerfilState();
+}
+
+class _FotoPerfilState extends State<FotoPerfil> {
+  final authController = AuthController();
+  UsuarioLogadoModel _usuario = UsuarioLogadoModel();
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +23,25 @@ class FotoPerfil extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(AppImages.logoDogwalker),
+          FutureBuilder(
+            future: authController.obterSessao(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                _usuario = snapshot.data as UsuarioLogadoModel;
+                String fotoUrl = "";
+                if (_usuario.fotoUrl!.isNotEmpty) {
+                  fotoUrl = _usuario.fotoUrl!;
+                } else {
+                  fotoUrl =
+                      "https://cdn4.iconfinder.com/data/icons/user-people-2/48/5-512.png";
+                }
+                return CircleAvatar(
+                  backgroundImage: NetworkImage(fotoUrl),
+                );
+              } else {
+                return Container();
+              }
+            },
           ),
           Positioned(
             right: -16,
