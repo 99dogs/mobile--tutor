@@ -21,14 +21,16 @@ class _AgendaPageState extends State<AgendaPage> {
           title: "Minha agenda",
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: TableCalendar(
-          locale: 'pt_BR',
-          firstDay: DateTime.now(),
-          focusedDay: DateTime.now(),
-          lastDay: DateTime.now(),
-          calendarFormat: CalendarFormat.month,
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TableCalendar(
+            firstDay: DateTime.now(),
+            focusedDay: DateTime.now(),
+            lastDay: DateTime.now(),
+            calendarFormat: CalendarFormat.month,
+          ),
         ),
       ),
     );

@@ -1,7 +1,9 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/modules/signin/signin_controller.dart';
+import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/social_login_button/email_and_pass_login_button.dart';
@@ -19,8 +21,12 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void initState() {
-    loginController.validarSessao(context);
     super.initState();
+    start();
+  }
+
+  start() async {
+    await loginController.validarSessao(context);
   }
 
   @override
@@ -35,7 +41,7 @@ class _SignInPageState extends State<SignInPage> {
           alignment: AlignmentDirectional.center,
           children: [
             Positioned(
-              top: size.height * 0.3,
+              top: size.height * 0.27,
               child: Container(
                 width: size.width - 35,
                 decoration: BoxDecoration(
@@ -67,35 +73,59 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                       child: Divider(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 70,
-                      ),
-                      child: EmailAndPassLoginButton(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, "/login");
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 70,
-                      ),
-                      child: GoogleSocialLoginButton(
-                        onTap: () async {
-                          String? response =
-                              await signinController.googleSignIn(context);
-                          if (response != null && response.isNotEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(response),
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                    ValueListenableBuilder(
+                      valueListenable: loginController.state,
+                      builder: (_, value, __) {
+                        StateEnum state = value as StateEnum;
+                        if (state == StateEnum.success) {
+                          return Container(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 70,
+                                  ),
+                                  child: EmailAndPassLoginButton(
+                                    onTap: () {
+                                      Navigator.pushReplacementNamed(
+                                          context, "/login");
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 70,
+                                  ),
+                                  child: GoogleSocialLoginButton(
+                                    onTap: () async {
+                                      String? response = await signinController
+                                          .googleSignIn(context);
+                                      if (response != null &&
+                                          response.isNotEmpty) {
+                                        CoolAlert.show(
+                                          context: context,
+                                          title: "Ocorreu um problema\n",
+                                          text: response,
+                                          backgroundColor: AppColors.primary,
+                                          type: CoolAlertType.error,
+                                          confirmBtnText: "Fechar",
+                                          confirmBtnColor: AppColors.shape,
+                                          confirmBtnTextStyle:
+                                              TextStyles.buttonGray,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 55),

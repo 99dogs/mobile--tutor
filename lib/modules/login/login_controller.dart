@@ -52,12 +52,23 @@ class LoginController {
     }
   }
 
-  void validarSessao(BuildContext context) async {
-    UsuarioLogadoModel usuario = UsuarioLogadoModel();
-    usuario = await authController.obterSessao();
+  Future<void> validarSessao(BuildContext context) async {
+    try {
+      errorException.value = "";
+      state.value = StateEnum.loading;
+      UsuarioLogadoModel usuario = UsuarioLogadoModel();
+      usuario = await authController.obterSessao();
 
-    if (usuario.token != null && usuario.token!.isNotEmpty) {
-      Navigator.pushReplacementNamed(context, "/home");
+      if (usuario.token != null && usuario.token!.isNotEmpty) {
+        // state.value = StateEnum.success;
+        Navigator.pushReplacementNamed(context, "/home");
+      } else {
+        state.value = StateEnum.success;
+      }
+    } catch (e) {
+      state.value = StateEnum.success;
+      errorException.value = e.toString();
+      throw (e);
     }
   }
 

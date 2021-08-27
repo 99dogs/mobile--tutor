@@ -79,53 +79,78 @@ class _MeusPasseiosListWidgetState extends State<MeusPasseiosListWidget> {
 
                         return Column(
                           children: [
-                            GestureDetector(
-                              child: Container(
-                                color: AppColors.shape,
-                                child: ListTile(
-                                  title: Text(
-                                    controller.passeios[index].dogwalker!.nome!,
-                                    style: TextStyles.buttonBoldGray,
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                      0,
+                                      3,
+                                    ), // changes position of shadow
                                   ),
-                                  subtitle: Text.rich(
-                                    TextSpan(
-                                      text: "#" +
-                                          controller.passeios[index].id!
-                                              .toString() +
-                                          " | ",
-                                      children: [
-                                        TextSpan(
-                                          text: controller
-                                              .passeios[index].status!,
-                                        )
-                                      ],
-                                    ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  controller.passeios[index].dogwalker!.nome!,
+                                  style: TextStyles.buttonBoldGray,
+                                ),
+                                subtitle: Text.rich(
+                                  TextSpan(
+                                    text: "#" +
+                                        controller.passeios[index].id!
+                                            .toString() +
+                                        " | ",
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            controller.passeios[index].status!,
+                                      )
+                                    ],
                                   ),
-                                  leading: Container(
+                                ),
+                                leading: Visibility(
+                                  visible: controller.passeios[index].dogwalker!
+                                              .fotoUrl !=
+                                          null
+                                      ? true
+                                      : false,
+                                  child: Container(
                                     height: 40,
                                     width: 40,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
                                       image: DecorationImage(
-                                        image:
-                                            AssetImage(AppImages.logoDogwalker),
+                                        image: NetworkImage(controller
+                                                    .passeios[index]
+                                                    .dogwalker!
+                                                    .fotoUrl !=
+                                                null
+                                            ? controller.passeios[index]
+                                                .dogwalker!.fotoUrl!
+                                            : ''),
                                       ),
                                     ),
                                   ),
-                                  trailing: Text(
-                                    controller.getFormatedDate(
-                                        controller.passeios[index].datahora!),
-                                    textDirection: TextDirection.rtl,
-                                  ),
                                 ),
+                                trailing: Text(
+                                  controller.getFormatedDate(
+                                      controller.passeios[index].datahora!),
+                                  textDirection: TextDirection.rtl,
+                                ),
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    "/passeio/detail",
+                                    arguments: controller.passeios[index].id!,
+                                  );
+                                },
                               ),
-                              onTap: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  "/passeio/detail",
-                                  arguments: controller.passeios[index].id!,
-                                );
-                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.only(

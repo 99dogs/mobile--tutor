@@ -66,7 +66,21 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                         return Column(
                           children: [
                             Container(
-                              color: AppColors.shape,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                      0,
+                                      3,
+                                    ), // changes position of shadow
+                                  ),
+                                ],
+                              ),
                               child: ListTile(
                                 title: Text(
                                   controller.cachorros[index].nome!,

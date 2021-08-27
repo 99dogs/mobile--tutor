@@ -108,7 +108,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DateTimeField(
                                         format: DateFormat("yyyy-MM-dd"),
                                         onShowPicker: (context, currentValue) {
@@ -166,7 +166,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DropdownButtonFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
@@ -232,7 +232,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DropdownButtonFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,

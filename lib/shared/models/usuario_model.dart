@@ -22,6 +22,7 @@ class UsuarioModel {
   bool? credentialsNonExpired;
   bool? accountNonExpired;
   bool? accountNonLocked;
+  String? fotoUrl;
 
   UsuarioModel({
     this.id,
@@ -42,6 +43,7 @@ class UsuarioModel {
     this.credentialsNonExpired,
     this.accountNonExpired,
     this.accountNonLocked,
+    this.fotoUrl,
   });
 
   UsuarioModel copyWith({
@@ -63,6 +65,7 @@ class UsuarioModel {
     bool? credentialsNonExpired,
     bool? accountNonExpired,
     bool? accountNonLocked,
+    String? fotoUrl,
   }) {
     return UsuarioModel(
       id: id ?? this.id,
@@ -84,6 +87,7 @@ class UsuarioModel {
           credentialsNonExpired ?? this.credentialsNonExpired,
       accountNonExpired: accountNonExpired ?? this.accountNonExpired,
       accountNonLocked: accountNonLocked ?? this.accountNonLocked,
+      fotoUrl: fotoUrl ?? this.fotoUrl,
     );
   }
 
@@ -107,6 +111,7 @@ class UsuarioModel {
       'credentialsNonExpired': credentialsNonExpired,
       'accountNonExpired': accountNonExpired,
       'accountNonLocked': accountNonLocked,
+      'fotoUrl': fotoUrl,
     };
   }
 
@@ -130,6 +135,7 @@ class UsuarioModel {
       credentialsNonExpired: map['credentialsNonExpired'],
       accountNonExpired: map['accountNonExpired'],
       accountNonLocked: map['accountNonLocked'],
+      fotoUrl: map['fotoUrl'],
     );
   }
 
@@ -156,6 +162,7 @@ class UsuarioModel {
     accountNonExpired = json['accountNonExpired'];
     credentialsNonExpired = json['credentialsNonExpired'];
     accountNonLocked = json['accountNonLocked'];
+    fotoUrl = json['fotoUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -182,12 +189,13 @@ class UsuarioModel {
     data['accountNonExpired'] = this.accountNonExpired;
     data['credentialsNonExpired'] = this.credentialsNonExpired;
     data['accountNonLocked'] = this.accountNonLocked;
+    data['fotoUrl'] = this.fotoUrl;
     return data;
   }
 
   @override
   String toString() {
-    return 'UsuarioModel(id: $id, criado: $criado, modificado: $modificado, nome: $nome, email: $email, telefone: $telefone, rua: $rua, bairro: $bairro, numero: $numero, cep: $cep, avaliacao: $avaliacao, qtdeTicketDisponivel: $qtdeTicketDisponivel, cidade: $cidade, estado: $estado, enabled: $enabled, credentialsNonExpired: $credentialsNonExpired, accountNonExpired: $accountNonExpired, accountNonLocked: $accountNonLocked)';
+    return 'UsuarioModel(id: $id, criado: $criado, modificado: $modificado, nome: $nome, email: $email, telefone: $telefone, rua: $rua, bairro: $bairro, numero: $numero, cep: $cep, avaliacao: $avaliacao, qtdeTicketDisponivel: $qtdeTicketDisponivel, cidade: $cidade, estado: $estado, enabled: $enabled, credentialsNonExpired: $credentialsNonExpired, accountNonExpired: $accountNonExpired, accountNonLocked: $accountNonLocked, fotoUrl: $fotoUrl)';
   }
 
   @override
@@ -212,7 +220,8 @@ class UsuarioModel {
         other.enabled == enabled &&
         other.credentialsNonExpired == credentialsNonExpired &&
         other.accountNonExpired == accountNonExpired &&
-        other.accountNonLocked == accountNonLocked;
+        other.accountNonLocked == accountNonLocked &&
+        other.fotoUrl == fotoUrl;
   }
 
   @override
@@ -234,6 +243,7 @@ class UsuarioModel {
         enabled.hashCode ^
         credentialsNonExpired.hashCode ^
         accountNonExpired.hashCode ^
-        accountNonLocked.hashCode;
+        accountNonLocked.hashCode ^
+        fotoUrl.hashCode;
   }
 }

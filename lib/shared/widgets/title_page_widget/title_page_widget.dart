@@ -17,63 +17,61 @@ class TitlePageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          color: AppColors.primary,
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.background,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            color: AppColors.primary,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.white,
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
               ),
-              border: Border.all(
-                color: AppColors.background,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(18),
-              child: Row(
-                children: [
-                  enableBackButton
-                      ? GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacementNamed(
-                              context,
-                              routePage,
-                              arguments: args,
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              right: 10,
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: Row(
+                  children: [
+                    enableBackButton
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                routePage,
+                                arguments: args,
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                right: 10,
+                              ),
+                              child: Icon(Icons.arrow_back),
                             ),
-                            child: Icon(Icons.arrow_back),
-                          ),
-                        )
-                      : Container(),
-                  Text(
-                    title,
-                    style: TextStyles.titleBoldHeading,
-                  ),
-                ],
+                          )
+                        : Container(),
+                    Text(
+                      title,
+                      style: TextStyles.titleBoldHeading,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Container(),
           ),
-          child: Divider(
-            thickness: 1,
-            height: 1,
-            color: AppColors.stroke,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

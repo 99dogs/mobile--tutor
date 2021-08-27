@@ -38,7 +38,7 @@ class RegisterController {
   String? validarSenha(String? value) =>
       value?.isEmpty ?? true ? "O campo senha não pode ser vazio." : null;
 
-  void autenticar(BuildContext context) async {
+  Future<void> autenticar(BuildContext context) async {
     final form = formKey.currentState;
 
     if (form!.validate()) {

@@ -66,7 +66,21 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                         return Column(
                           children: [
                             Container(
-                              color: AppColors.shape,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                      0,
+                                      3,
+                                    ), // changes position of shadow
+                                  ),
+                                ],
+                              ),
                               child: ListTile(
                                 onTap: () {
                                   Navigator.pushReplacementNamed(
@@ -83,14 +97,22 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                                   rating:
                                       controller.dogwalkers[index].avaliacao!,
                                 ),
-                                leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage(AppImages.logoDogwalker),
+                                leading: Visibility(
+                                  visible:
+                                      controller.dogwalkers[index].fotoUrl !=
+                                              null
+                                          ? true
+                                          : false,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          controller.dogwalkers[index].fotoUrl!,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

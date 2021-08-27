@@ -114,6 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               builder: (_, value, __) {
                                 String error = value as String;
                                 if (error.isNotEmpty) {
+                                  Navigator.of(context).pop();
                                   return Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: Container(
@@ -174,10 +175,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 child: Text("Não concordo"),
                                               ),
                                               ElevatedButton(
-                                                onPressed: () {
-                                                  controller
+                                                onPressed: () async {
+                                                  await controller
                                                       .autenticar(context);
-                                                  Navigator.of(context).pop();
                                                 },
                                                 child: Text("Concordo"),
                                               ),

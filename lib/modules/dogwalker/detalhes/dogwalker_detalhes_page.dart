@@ -1,9 +1,10 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/dogwalker/detalhes/dogwalker_detalhes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
+import 'package:tutor/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_widget.dart';
 import 'package:tutor/shared/widgets/stars_rating/star_rating_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
 
@@ -91,13 +92,20 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                     return Column(
                       children: [
                         SizedBox(height: 16),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            image: DecorationImage(
-                              image: AssetImage(AppImages.logoDogwalker),
+                        Visibility(
+                          visible: controller.dogwalker.fotoUrl != null
+                              ? true
+                              : false,
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  controller.dogwalker.fotoUrl!,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -118,11 +126,25 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                "/passeio/add",
-                                arguments: controller.dogwalker.id,
-                              );
+                              if (controller.tutor.qtdeTicketDisponivel! > 0) {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/passeio/add",
+                                  arguments: controller.dogwalker.id,
+                                );
+                              } else {
+                                CoolAlert.show(
+                                  context: context,
+                                  title: "Atenção\n",
+                                  text:
+                                      "Você não possui ticket suficiente para agendar novos passeios.",
+                                  backgroundColor: AppColors.primary,
+                                  type: CoolAlertType.warning,
+                                  confirmBtnText: "Fechar",
+                                  confirmBtnColor: AppColors.shape,
+                                  confirmBtnTextStyle: TextStyles.buttonGray,
+                                );
+                              }
                             },
                             icon: Icon(
                               Icons.calendar_today_outlined,

@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             child: Container(
-                              height: 35,
-                              width: 35,
+                              height: 30,
+                              width: 30,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: AppColors.background,
@@ -100,7 +100,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: Container(
-          color: AppColors.background,
+          decoration: BoxDecoration(
+            border: Border.all(width: 0, color: AppColors.primary),
+          ),
           child: ValueListenableBuilder(
             valueListenable: homeController.paginaAtual,
             builder: (context, value, child) {
