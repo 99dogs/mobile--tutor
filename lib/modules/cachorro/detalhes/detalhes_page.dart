@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/home/home_controller.dart';
 import 'package:tutor/modules/cachorro/meus_caes_list/detalhes_page_controller.dart';
-import 'package:tutor/repositories/cachorro_repository.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
-import 'package:tutor/shared/models/cachorro_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/bottom_buttons/bottom_buttons_widget.dart';
@@ -318,7 +316,7 @@ class _DetalhesPageState extends State<DetalhesPage> {
               },
             );
           },
-          secondaryLabel: "Editar",
+          secondaryLabel: "Alterar",
           secondaryOnPressed: () async {
             Navigator.pushReplacementNamed(
               context,

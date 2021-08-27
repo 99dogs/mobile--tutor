@@ -1,4 +1,5 @@
 import 'package:animated_card/animated_card.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -116,7 +117,7 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DateTimeField(
                                         initialValue:
                                             controller.cachorro.dataNascimento,
@@ -176,7 +177,7 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DropdownButtonFormField(
                                         value: controller.cachorro.porte,
                                         autovalidateMode:
@@ -243,7 +244,7 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                                 Column(
                                   children: [
                                     AnimatedCard(
-                                      direction: AnimatedCardDirection.left,
+                                      direction: AnimatedCardDirection.right,
                                       child: DropdownButtonFormField(
                                         value: controller.cachorro.raca,
                                         autovalidateMode:
@@ -367,7 +368,7 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                     arguments: widget.id,
                   );
                 },
-                secondaryLabel: "Alterar",
+                secondaryLabel: "Confirmar alteração",
                 secondaryOnPressed: () async {
                   String? response = await controller.alterar();
                   if (response != null) {
@@ -378,6 +379,17 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                         ),
                       );
                     } else {
+                      await CoolAlert.show(
+                        context: context,
+                        title: "Aaee!\n",
+                        text: "Informações atualizadas com sucesso.",
+                        backgroundColor: AppColors.primary,
+                        type: CoolAlertType.success,
+                        confirmBtnText: "Fechar",
+                        confirmBtnColor: AppColors.shape,
+                        confirmBtnTextStyle: TextStyles.buttonGray,
+                        autoCloseDuration: Duration(milliseconds: 2700),
+                      );
                       Navigator.pushReplacementNamed(
                         context,
                         "/cachorro/detail",
