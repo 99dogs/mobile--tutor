@@ -1,14 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutor/shared/auth/auth_controller.dart';
-import 'package:tutor/shared/constants/endpoint_api.dart';
 import 'package:tutor/shared/models/cachorro_model.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 
 class CachorroRepository {
-  final _endpointApi = EndpointApi();
+  final _endpointApi = dotenv.get('ENDPOINT_API', fallback: '');
   final _authController = AuthController();
   var _client = http.Client();
   String _token = "";
@@ -35,7 +35,7 @@ class CachorroRepository {
   Future<List<CachorroModel>> buscarTodos() async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/cachorro",
+        _endpointApi + "/api/v1/cachorro",
       );
       var response = await _client.get(url, headers: await this.headers());
 
@@ -61,7 +61,7 @@ class CachorroRepository {
   Future<String?> cadastrar(CachorroModel cachorro) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/cachorro",
+        _endpointApi + "/api/v1/cachorro",
       );
       var response = await _client.post(
         url,
@@ -87,7 +87,7 @@ class CachorroRepository {
   Future<CachorroModel> buscarPorId(int id) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/cachorro/$id",
+        _endpointApi + "/api/v1/cachorro/$id",
       );
       var response = await _client.get(url, headers: await this.headers());
 
@@ -113,7 +113,7 @@ class CachorroRepository {
   Future<String?> alterar(CachorroModel cachorro) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/cachorro/" + cachorro.id.toString(),
+        _endpointApi + "/api/v1/cachorro/" + cachorro.id.toString(),
       );
       var response = await _client.put(
         url,
@@ -139,7 +139,7 @@ class CachorroRepository {
   Future<String?> excluir(int id) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/cachorro/$id",
+        _endpointApi + "/api/v1/cachorro/$id",
       );
       var response = await _client.delete(url, headers: await this.headers());
 

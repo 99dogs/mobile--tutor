@@ -1,15 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutor/shared/auth/auth_controller.dart';
-import 'package:tutor/shared/constants/endpoint_api.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/ticket_fatura_model.dart';
 import 'package:tutor/shared/models/ticket_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 
 class TicketRepository {
-  final _endpointApi = EndpointApi();
+  final _endpointApi = dotenv.get('ENDPOINT_API', fallback: '');
   final _authController = AuthController();
   var _client = http.Client();
   String _token = "";
@@ -37,7 +37,7 @@ class TicketRepository {
   Future<List<TicketModel>> buscarTodos() async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/ticket",
+        _endpointApi + "/api/v1/ticket",
       );
       var response = await _client.get(url, headers: await this.headers());
 
@@ -63,7 +63,7 @@ class TicketRepository {
   Future<TicketModel> solicitar(TicketModel ticket) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/ticket",
+        _endpointApi + "/api/v1/ticket",
       );
 
       Map<String, dynamic> body = {
@@ -103,7 +103,7 @@ class TicketRepository {
       ticketFatura.cpfPagador =
           ticketFatura.cpfPagador!.replaceAll(".", "").replaceAll("-", "");
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/ticket/faturar",
+        _endpointApi + "/api/v1/ticket/faturar",
       );
       var response = await _client.post(
         url,
@@ -129,7 +129,7 @@ class TicketRepository {
   Future<TicketModel> buscarPorId(int id) async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/ticket/" + id.toString(),
+        _endpointApi + "/api/v1/ticket/" + id.toString(),
       );
 
       var response = await _client.get(

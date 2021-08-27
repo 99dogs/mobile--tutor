@@ -1,15 +1,14 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutor/shared/auth/auth_controller.dart';
-import 'package:tutor/shared/constants/endpoint_api.dart';
 import 'package:tutor/shared/models/forma_de_pagamento_model.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
-import 'package:tutor/shared/models/ticket_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 
 class FormaDepagamentoRepository {
-  final _endpointApi = EndpointApi();
+  final _endpointApi = dotenv.get('ENDPOINT_API', fallback: '');
   final _authController = AuthController();
   var _client = http.Client();
   String _token = "";
@@ -37,7 +36,7 @@ class FormaDepagamentoRepository {
   Future<List<FormaDePagamentoModel>> buscarTodos() async {
     try {
       var url = Uri.parse(
-        _endpointApi.urlApi + "/api/v1/forma-de-pagamento",
+        _endpointApi + "/api/v1/forma-de-pagamento",
       );
       var response = await _client.get(url, headers: await this.headers());
 
