@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:tutor/shared/models/cidade_model.dart';
 import 'package:tutor/shared/models/estado_model.dart';
 

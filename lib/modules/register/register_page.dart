@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/modules/register/register_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/usuario_login_model.dart';

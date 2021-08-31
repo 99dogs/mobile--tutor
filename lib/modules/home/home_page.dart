@@ -8,7 +8,6 @@ import 'package:tutor/modules/ticket/meus_tickets/meus_tickets_page.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/widgets/bottom_navigation_bar/bottom_navigation_bar_widget.dart';
 import 'package:tutor/shared/widgets/drawer/drawer_widget.dart';
 

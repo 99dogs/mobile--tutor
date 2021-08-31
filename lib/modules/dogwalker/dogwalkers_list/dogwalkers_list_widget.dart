@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/shimmer_list_tile/shimmer_list_tile.dart';
 import 'package:tutor/shared/widgets/stars_rating/star_rating_widget.dart';

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:tutor/shared/models/forma_de_pagamento_model.dart';
 
 class TicketModel {

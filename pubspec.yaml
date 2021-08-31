@@ -44,6 +44,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   table_calendar: ^3.0.2
   cool_alert: ^1.1.0
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

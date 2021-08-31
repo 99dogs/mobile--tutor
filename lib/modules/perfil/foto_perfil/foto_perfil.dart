@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
-import 'package:tutor/shared/themes/app_images.dart';
 
 class FotoPerfil extends StatefulWidget {
   const FotoPerfil({Key? key}) : super(key: key);

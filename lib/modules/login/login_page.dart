@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/models/usuario_login_model.dart';
@@ -57,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           Text(
-                            "99Dogs",
+                            "99Dogs - Tutor",
                             style: TextStyles.titleLogo,
                           ),
                           Text(

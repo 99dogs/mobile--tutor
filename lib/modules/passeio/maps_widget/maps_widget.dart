@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tutor/modules/passeio/maps_widget/maps_controller.dart';
 

@@ -1,6 +1,5 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tutor/modules/login/login_controller.dart';
 import 'package:tutor/modules/signin/signin_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
@@ -57,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
                       child: Column(
                         children: [
                           Text(
-                            "99Dogs",
+                            "99Dogs - Tutor",
                             style: TextStyles.titleLogo,
                           ),
                           Text(

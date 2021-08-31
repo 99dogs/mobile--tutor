@@ -29,11 +29,11 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.history_outlined),
+              icon: Icon(Icons.list_alt_outlined),
               label: 'Passeios',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.nordic_walking_outlined),
+              icon: Icon(Icons.person_search_outlined),
               label: 'Dog walkers',
             ),
             BottomNavigationBarItem(

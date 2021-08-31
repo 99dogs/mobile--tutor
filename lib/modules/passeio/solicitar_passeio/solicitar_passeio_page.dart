@@ -191,7 +191,6 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                 AnimatedCard(
                                   direction: AnimatedCardDirection.right,
                                   child: MultiSelectFormFieldWidget(
-                                    autovalidate: false,
                                     chipBackGroundColor: AppColors.secondary,
                                     chipLabelStyle: TextStyle(
                                       fontWeight: FontWeight.bold,

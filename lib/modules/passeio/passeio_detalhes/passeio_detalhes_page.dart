@@ -1,6 +1,7 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:location/location.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:tutor/modules/passeio/maps_widget/maps_widget.dart';
 import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
@@ -72,88 +73,221 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                     );
                   } else if (state == StateEnum.success) {
                     return Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: size.height * 0.7,
-                            width: size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: AppColors.shape,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Column(
-                              children: [
-                                ItemDetailWidget(
-                                  icon: Icons.nordic_walking_outlined,
-                                  label: "Dog walker",
-                                  info: controller.passeio.dogwalker!.nome!,
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          await controller.init(widget.id);
+                        },
+                        child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20,
                                 ),
-                                ItemDetailWidget(
-                                  icon: FontAwesomeIcons.calendarCheck,
-                                  label: "Agendado para o dia",
-                                  info: controller.formatarData(
-                                    controller.passeio.datahora,
+                                child: Container(
+                                  height: size.height,
+                                  width: size.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.shape,
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                ),
-                                ItemDetailWidget(
-                                  icon: FontAwesomeIcons.infoCircle,
-                                  label: "Último status",
-                                  info: controller.passeio.status!,
-                                ),
-                                Visibility(
-                                  visible:
-                                      controller.passeio.datahorafinalizacao !=
-                                              null
-                                          ? true
-                                          : false,
-                                  child: ItemDetailWidget(
-                                    icon: FontAwesomeIcons.calendarTimes,
-                                    label: "Finalizado dia",
-                                    info: controller.formatarData(
-                                      controller.passeio.datahorafinalizacao,
+                                  child: RefreshIndicator(
+                                    onRefresh: () async {
+                                      await controller.init(widget.id);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        ItemDetailWidget(
+                                          icon: Icons.nordic_walking_outlined,
+                                          label: "Dog walker",
+                                          info: controller
+                                              .passeio.dogwalker!.nome!,
+                                        ),
+                                        ItemDetailWidget(
+                                          icon: FontAwesomeIcons.calendarCheck,
+                                          label: "Agendado para o dia",
+                                          info: controller.formatarData(
+                                            controller.passeio.datahora,
+                                          ),
+                                        ),
+                                        ItemDetailWidget(
+                                          icon: FontAwesomeIcons.infoCircle,
+                                          label: "Último status",
+                                          info: controller.passeio.status!,
+                                        ),
+                                        Visibility(
+                                          visible: controller.passeio
+                                                      .datahorafinalizacao !=
+                                                  null
+                                              ? true
+                                              : false,
+                                          child: ItemDetailWidget(
+                                            icon:
+                                                FontAwesomeIcons.calendarTimes,
+                                            label: "Finalizado dia",
+                                            info: controller.formatarData(
+                                              controller
+                                                  .passeio.datahorafinalizacao,
+                                            ),
+                                          ),
+                                        ),
+                                        ItemDetailWidget(
+                                          icon: FontAwesomeIcons.dog,
+                                          label: "Cachorro #1",
+                                          info: "Joe",
+                                        ),
+                                        Visibility(
+                                          visible: controller.passeio.status ==
+                                                  "Andamento"
+                                              ? true
+                                              : false,
+                                          child: Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton.icon(
+                                                  onPressed: () async {
+                                                    showModalBottomSheet<void>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Container(
+                                                          color: AppColors
+                                                              .background,
+                                                          child: Container(
+                                                            child: MapsWidget(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  icon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Icon(
+                                                      FontAwesomeIcons
+                                                          .locationArrow,
+                                                      size: 15,
+                                                    ),
+                                                  ),
+                                                  label: Text(
+                                                      "Acompanhar passeio"),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: controller.passeio.status ==
+                                                  "Aceito"
+                                              ? true
+                                              : false,
+                                          child: Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton.icon(
+                                                  onPressed: () async {
+                                                    CoolAlert.show(
+                                                      context: context,
+                                                      title:
+                                                          "Código para iniciar o passeio\n",
+                                                      text: "Solicite ao " +
+                                                          controller
+                                                              .passeio
+                                                              .dogwalker!
+                                                              .nome! +
+                                                          " a leitura deste código para dar início.\n",
+                                                      backgroundColor:
+                                                          AppColors.primary,
+                                                      type: CoolAlertType.info,
+                                                      confirmBtnText: "Fechar",
+                                                      confirmBtnColor:
+                                                          AppColors.shape,
+                                                      confirmBtnTextStyle:
+                                                          TextStyles.buttonGray,
+                                                      widget: QrImage(
+                                                        data: widget.id
+                                                            .toString(),
+                                                        version:
+                                                            QrVersions.auto,
+                                                        size: 135,
+                                                      ),
+                                                      animType:
+                                                          CoolAlertAnimType
+                                                              .slideInUp,
+                                                    );
+                                                  },
+                                                  icon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Icon(
+                                                      Icons.qr_code_2_outlined,
+                                                      size: 15,
+                                                    ),
+                                                  ),
+                                                  label: Text("Abrir QrCode"),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: controller.passeio.status ==
+                                                  "Finalizado"
+                                              ? true
+                                              : false,
+                                          child: Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton.icon(
+                                                  onPressed: () async {
+                                                    showModalBottomSheet<void>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return Container(
+                                                          color: AppColors
+                                                              .background,
+                                                          child: Container(
+                                                            child: Container(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  icon: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Icon(
+                                                      Icons.place_outlined,
+                                                      size: 15,
+                                                    ),
+                                                  ),
+                                                  label: Text(
+                                                      "Rever trajetória do passeio"),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                                ItemDetailWidget(
-                                  icon: FontAwesomeIcons.dog,
-                                  label: "Cachorro #1",
-                                  info: "Joe",
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton.icon(
-                                        onPressed: () async {
-                                          showModalBottomSheet<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Container(
-                                                color: AppColors.background,
-                                                child: Container(
-                                                  child: MapsWidget(),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                        icon: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Icon(
-                                            FontAwesomeIcons.locationArrow,
-                                            size: 15,
-                                          ),
-                                        ),
-                                        label: Text("Acompanhar passeio"),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     );
                   } else {

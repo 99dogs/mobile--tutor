@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tutor/modules/cachorro/detalhes/detalhes_page.dart';
 import 'package:tutor/modules/cachorro/meus_caes/meus_caes_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
