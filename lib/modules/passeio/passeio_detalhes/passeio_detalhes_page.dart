@@ -87,7 +87,7 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                   vertical: 20,
                                 ),
                                 child: Container(
-                                  height: size.height,
+                                  height: size.height * 0.70,
                                   width: size.width * 0.9,
                                   decoration: BoxDecoration(
                                     color: AppColors.shape,
@@ -99,6 +99,12 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                     },
                                     child: Column(
                                       children: [
+                                        ItemDetailWidget(
+                                          icon: Icons.tag_outlined,
+                                          label: "Identificador único",
+                                          info:
+                                              controller.passeio.id!.toString(),
+                                        ),
                                         ItemDetailWidget(
                                           icon: Icons.nordic_walking_outlined,
                                           label: "Dog walker",
@@ -135,8 +141,8 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                         ),
                                         ItemDetailWidget(
                                           icon: FontAwesomeIcons.dog,
-                                          label: "Cachorro #1",
-                                          info: "Joe",
+                                          label: "Cachorro(s)",
+                                          info: controller.cachorros,
                                         ),
                                         Visibility(
                                           visible: controller.passeio.status ==
@@ -150,18 +156,12 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                               children: [
                                                 ElevatedButton.icon(
                                                   onPressed: () async {
-                                                    showModalBottomSheet<void>(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return Container(
-                                                          color: AppColors
-                                                              .background,
-                                                          child: Container(
-                                                            child: MapsWidget(),
-                                                          ),
-                                                        );
-                                                      },
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                      context,
+                                                      "/maps/detail",
+                                                      arguments:
+                                                          controller.passeio.id,
                                                     );
                                                   },
                                                   icon: Padding(
@@ -250,18 +250,12 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                               children: [
                                                 ElevatedButton.icon(
                                                   onPressed: () async {
-                                                    showModalBottomSheet<void>(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return Container(
-                                                          color: AppColors
-                                                              .background,
-                                                          child: Container(
-                                                            child: Container(),
-                                                          ),
-                                                        );
-                                                      },
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                      context,
+                                                      "/maps/detail",
+                                                      arguments:
+                                                          controller.passeio.id,
                                                     );
                                                   },
                                                   icon: Padding(

@@ -46,6 +46,7 @@ class DrawerWidget extends StatelessWidget {
                   : throw 'Não foi possível abrir o link $_url';
             },
           ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.logout),
             title: Text("Encerrar sessão"),

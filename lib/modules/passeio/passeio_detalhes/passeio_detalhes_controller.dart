@@ -10,6 +10,8 @@ class PasseioDetalhesController {
 
   final state = ValueNotifier<StateEnum>(StateEnum.start);
 
+  String cachorros = "";
+
   formatarData(_date) {
     if (_date == null) return "";
     var inputFormat = DateFormat('yyyy-MM-ddTHH:mm:ss');
@@ -22,6 +24,16 @@ class PasseioDetalhesController {
     try {
       state.value = StateEnum.loading;
       passeio = await passeioRepository.buscarPorId(passeioId);
+
+      if (cachorros == "") {
+        if (passeio.cachorros != null && passeio.cachorros!.length > 0) {
+          passeio.cachorros!.forEach((element) {
+            cachorros = cachorros + element.nome! + ",";
+          });
+          cachorros = cachorros.substring(0, cachorros.length - 1);
+        }
+      }
+
       state.value = StateEnum.success;
     } catch (e) {
       print(e);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutor/shared/auth/auth_controller.dart';
+import 'package:tutor/shared/models/passeio_lat_long_model.dart';
 import 'package:tutor/shared/models/passeio_model.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/solicitar_passeio_model.dart';
@@ -108,6 +109,63 @@ class PasseioRepository {
         );
 
         return passeio;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<PasseioLatLongModel> posicaoAtual(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi + "/api/v1/passeio/localizacao/posicao-atual/$id",
+      );
+
+      var response = await _client.get(
+        url,
+        headers: await this.headers(),
+      );
+
+      if (response.statusCode == 200) {
+        PasseioLatLongModel latLong = PasseioLatLongModel.fromJson(
+          jsonDecode(response.body),
+        );
+
+        return latLong;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<List<PasseioLatLongModel>> posicaoCompleta(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi + "/api/v1/passeio/localizacao/posicao-completa/$id",
+      );
+      var response = await _client.get(url, headers: await this.headers());
+
+      if (response.statusCode == 200) {
+        List<PasseioLatLongModel> localizacoes =
+            (jsonDecode(response.body) as List)
+                .map((data) => PasseioLatLongModel.fromJson(data))
+                .toList();
+
+        return localizacoes;
       } else if (response.statusCode == 402 || response.statusCode == 502) {
         throw ("Ocorreu um problema inesperado.");
       } else {

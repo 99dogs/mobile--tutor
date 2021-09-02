@@ -8,6 +8,7 @@ import 'package:tutor/modules/dogwalker/detalhes/dogwalker_detalhes_page.dart';
 import 'package:tutor/modules/dogwalker/dogwalkers/dogwalkers_page.dart';
 import 'package:tutor/modules/home/home_page.dart';
 import 'package:tutor/modules/login/login_page.dart';
+import 'package:tutor/modules/passeio/maps_widget/maps_widget.dart';
 import 'package:tutor/modules/passeio/meus_passeios/meus_passeios_page.dart';
 import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_page.dart';
 import 'package:tutor/modules/passeio/solicitar_passeio/solicitar_passeio_page.dart';
@@ -62,6 +63,9 @@ class AppWdiget extends StatelessWidget {
         "/ticket/list": (context) => MeusTicketsPage(),
         "/ticket/add": (context) => SolicitarTicketPage(),
         "/ticket/detail": (context) => DetalhesTicketPage(
+              id: ModalRoute.of(context)!.settings.arguments as int,
+            ),
+        "/maps/detail": (context) => MapsWidget(
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),
       },
