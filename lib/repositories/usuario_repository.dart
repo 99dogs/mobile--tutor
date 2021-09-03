@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/usuario_alterar_dados_model.dart';
@@ -97,6 +100,7 @@ class UsuarioRepository {
           id: usuario.id,
           nome: usuario.nome,
           token: _token,
+          fotoUrl: usuario.fotoUrl,
         );
 
         return usuarioLogado;
@@ -238,6 +242,52 @@ class UsuarioRepository {
       } else {
         ResponseDataModel responseData =
             ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<String?> atualizarFoto(int id, XFile image) async {
+    try {
+      UsuarioLogadoModel usuario = await _authController.obterSessao();
+
+      if (usuario.token != null && usuario.token!.isNotEmpty) {
+        _token = usuario.token!;
+      }
+
+      var url = _endpointApi + "/api/v1/usuario/upload/foto/$id";
+
+      String filename = image.path.split("/").last;
+      FormData formData = FormData.fromMap({
+        "foto": await MultipartFile.fromFile(
+          image.path,
+          filename: filename,
+          contentType: MediaType('image', 'png'),
+        ),
+        "type": "image/png",
+      });
+
+      Response response = await Dio().post(
+        url,
+        data: formData,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer " + _token,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        Map res = response.data;
+        return res["url"];
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.data);
 
         throw (responseData.mensagem);
       }
