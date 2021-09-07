@@ -24,6 +24,7 @@ class DogwalkerDetalhesController {
   UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel();
   List<ConfiguracaoHorarioModel> horarios = [];
   List<QualificacaoModel> qualificacoes = [];
+  int passeiosEfetuados = 0;
 
   formataData(
     _date,
@@ -43,6 +44,8 @@ class DogwalkerDetalhesController {
       dogwalker = await usuarioRepository.buscarPorId(id);
       horarios = await configuracaoHorarioRepository.buscarPorDogwalker(id);
       qualificacoes = await qualificacaoRepository.buscarPorDogwalker(id);
+      passeiosEfetuados =
+          await usuarioRepository.retornaQtdePasseiosEfetuados(id);
       state.value = StateEnum.success;
     } catch (e) {
       state.value = StateEnum.error;

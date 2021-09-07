@@ -167,7 +167,7 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             ),
                             Column(
                               children: [
-                                Text("0"),
+                                Text(controller.passeiosEfetuados.toString()),
                                 Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: Text(

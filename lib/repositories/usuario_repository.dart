@@ -299,4 +299,28 @@ class UsuarioRepository {
       throw (e);
     }
   }
+
+  Future<int> retornaQtdePasseiosEfetuados(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi + "/api/v1/usuario/dogwalker/passeios-efetuados/$id",
+      );
+      var response = await _client.get(url, headers: await this.headers());
+
+      if (response.statusCode == 200) {
+        int quantidade = jsonDecode(response.body);
+
+        return quantidade;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }
