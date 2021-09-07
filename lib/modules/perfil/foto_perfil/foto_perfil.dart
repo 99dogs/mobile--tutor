@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tutor/modules/perfil/foto_perfil/foto_perfil_controller.dart';
-import 'package:tutor/modules/perfil/meu_perfil/meu_perfil_controller.dart';
 import 'package:tutor/repositories/usuario_repository.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:image_picker/image_picker.dart';
