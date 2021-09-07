@@ -115,12 +115,6 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             style: TextStyles.titleBoldHeading,
                           ),
                         ),
-                        Text(
-                          controller.dogwalker.telefone != null
-                              ? 'controller.dogwalker.telefone!'
-                              : 'Telefone não específicado.',
-                          style: TextStyles.buttonGray,
-                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18),
                           child: ElevatedButton.icon(
@@ -152,6 +146,7 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             label: Text("Agendar comigo"),
                           ),
                         ),
+                        Divider(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
