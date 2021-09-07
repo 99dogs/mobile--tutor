@@ -104,6 +104,44 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                 ),
                                 AnimatedCard(
                                   direction: AnimatedCardDirection.right,
+                                  child: MultiSelectFormFieldWidget(
+                                    chipBackGroundColor: AppColors.secondary,
+                                    chipLabelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    dialogTextStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    checkBoxActiveColor: AppColors.primary,
+                                    checkBoxCheckColor: Colors.white,
+                                    dialogShapeBorder: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0),
+                                      ),
+                                    ),
+                                    dataSource: controller.listCachorros,
+                                    title: "Quais dos seus cães irão passear?",
+                                    textField: 'nome',
+                                    valueField: 'id',
+                                    okButtonLabel: 'Adicionar',
+                                    cancelButtonLabel: 'Cancelar',
+                                    required: true,
+                                    onSaved: (value) {
+                                      if (value == null) return;
+                                      controller.onChange(cachorrosIds: value);
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                    color: AppColors.stroke,
+                                  ),
+                                ),
+                                AnimatedCard(
+                                  direction: AnimatedCardDirection.right,
                                   child: DateTimeField(
                                     format: DateFormat("dd/MM/yyyy HH:mm"),
                                     onShowPicker:
@@ -178,44 +216,6 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                       ),
                                       border: InputBorder.none,
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 16),
-                                  child: Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                    color: AppColors.stroke,
-                                  ),
-                                ),
-                                AnimatedCard(
-                                  direction: AnimatedCardDirection.right,
-                                  child: MultiSelectFormFieldWidget(
-                                    chipBackGroundColor: AppColors.secondary,
-                                    chipLabelStyle: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    dialogTextStyle: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    checkBoxActiveColor: AppColors.primary,
-                                    checkBoxCheckColor: Colors.white,
-                                    dialogShapeBorder: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0),
-                                      ),
-                                    ),
-                                    dataSource: controller.listCachorros,
-                                    title: "Quais dos seus cães irão passear?",
-                                    textField: 'nome',
-                                    valueField: 'id',
-                                    okButtonLabel: 'Adicionar',
-                                    cancelButtonLabel: 'Cancelar',
-                                    required: true,
-                                    onSaved: (value) {
-                                      if (value == null) return;
-                                      controller.onChange(cachorrosIds: value);
-                                    },
                                   ),
                                 ),
                                 Padding(
