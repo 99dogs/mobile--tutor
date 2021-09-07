@@ -96,6 +96,10 @@ class UsuarioRepository {
 
         UsuarioModel usuario = await buscarMinhasInformacoes();
 
+        if (usuario.tipo == "DOGWALKER") {
+          throw ("Percebemos que você é um dog walker, este é um aplicativo dedicado para o tutor.");
+        }
+
         UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel(
           id: usuario.id,
           nome: usuario.nome,
