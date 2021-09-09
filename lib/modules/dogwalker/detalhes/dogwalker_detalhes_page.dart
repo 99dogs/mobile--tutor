@@ -102,7 +102,7 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                               borderRadius: BorderRadius.circular(50),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  controller.dogwalker.fotoUrl!,
+                                  controller.dogwalker.fotoUrl ?? '',
                                 ),
                               ),
                             ),

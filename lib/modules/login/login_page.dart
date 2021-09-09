@@ -56,12 +56,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           Text(
-                            "99Dogs - Tutor",
+                            "Tutor",
                             style: TextStyles.titleLogo,
-                          ),
-                          Text(
-                            "Melhor lugar para encontrar dogwalkers.",
-                            style: TextStyles.captionBoldBody,
                           ),
                         ],
                       ),

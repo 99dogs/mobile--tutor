@@ -109,7 +109,9 @@ class _DogwalkersListWidgetState extends State<DogwalkersListWidget> {
                                       borderRadius: BorderRadius.circular(30),
                                       image: DecorationImage(
                                         image: NetworkImage(
-                                          controller.dogwalkers[index].fotoUrl!,
+                                          controller
+                                                  .dogwalkers[index].fotoUrl ??
+                                              '',
                                         ),
                                       ),
                                     ),

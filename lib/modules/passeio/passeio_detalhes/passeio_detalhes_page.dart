@@ -182,7 +182,9 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                         ),
                                         Visibility(
                                           visible: controller.passeio.status ==
-                                                  "Aceito"
+                                                      "Aceito" ||
+                                                  controller.passeio.status ==
+                                                      "Andamento"
                                               ? true
                                               : false,
                                           child: Expanded(
@@ -194,14 +196,9 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                                   onPressed: () async {
                                                     CoolAlert.show(
                                                       context: context,
-                                                      title:
-                                                          "Código para iniciar o passeio\n",
-                                                      text: "Solicite ao " +
-                                                          controller
-                                                              .passeio
-                                                              .dogwalker!
-                                                              .nome! +
-                                                          " a leitura deste código para dar início.\n",
+                                                      title: "QRCode\n",
+                                                      text:
+                                                          "Solicite ao dog walker a leitura deste código.\n",
                                                       backgroundColor:
                                                           AppColors.primary,
                                                       type: CoolAlertType.info,
