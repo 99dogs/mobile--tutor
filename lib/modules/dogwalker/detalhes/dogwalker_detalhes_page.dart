@@ -203,24 +203,37 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             showModalBottomSheet<void>(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container(
-                                  color: AppColors.background,
-                                  child: ListView.builder(
-                                    itemCount: controller.horarios.length,
-                                    itemBuilder: (context, index) {
-                                      String diaDaSemana = diasSemana[controller
-                                          .horarios[index].diaSemana] as String;
-                                      return ListTile(
-                                        title: Text(diaDaSemana),
-                                        subtitle: Text(controller
-                                                .horarios[index].horaInicio! +
-                                            " - " +
-                                            controller
-                                                .horarios[index].horaFinal!),
-                                      );
-                                    },
-                                  ),
-                                );
+                                if (controller.horarios.length > 0) {
+                                  return Container(
+                                    color: AppColors.background,
+                                    child: ListView.builder(
+                                      itemCount: controller.horarios.length,
+                                      itemBuilder: (context, index) {
+                                        String diaDaSemana = diasSemana[
+                                            controller.horarios[index]
+                                                .diaSemana] as String;
+                                        return ListTile(
+                                          title: Text(diaDaSemana),
+                                          subtitle: Text(controller
+                                                  .horarios[index].horaInicio! +
+                                              " - " +
+                                              controller
+                                                  .horarios[index].horaFinal!),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    height: double.maxFinite,
+                                    child: Center(
+                                      child: Text(
+                                        "Nenhum horário para exibição.",
+                                        style: TextStyles.input,
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                             );
                           },
@@ -234,24 +247,37 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             showModalBottomSheet<void>(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container(
-                                  color: AppColors.background,
-                                  child: ListView.builder(
-                                    itemCount: controller.qualificacoes.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(controller
-                                                .qualificacoes[index]
-                                                .modalidade! +
-                                            " / " +
-                                            controller
-                                                .qualificacoes[index].titulo!),
-                                        subtitle: Text(controller
-                                            .qualificacoes[index].descricao!),
-                                      );
-                                    },
-                                  ),
-                                );
+                                if (controller.qualificacoes.length > 0) {
+                                  return Container(
+                                    color: AppColors.background,
+                                    child: ListView.builder(
+                                      itemCount:
+                                          controller.qualificacoes.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          title: Text(controller
+                                                  .qualificacoes[index]
+                                                  .modalidade! +
+                                              " / " +
+                                              controller.qualificacoes[index]
+                                                  .titulo!),
+                                          subtitle: Text(controller
+                                              .qualificacoes[index].descricao!),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    height: double.maxFinite,
+                                    child: Center(
+                                      child: Text(
+                                        "Nenhuma qualificação para exibição.",
+                                        style: TextStyles.input,
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                             );
                           },
@@ -265,24 +291,38 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                             showModalBottomSheet<void>(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container(
-                                  color: AppColors.background,
-                                  child: ListView.builder(
-                                    itemCount: controller.qualificacoes.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(controller
-                                                .qualificacoes[index]
-                                                .modalidade! +
-                                            " / " +
-                                            controller
-                                                .qualificacoes[index].titulo!),
-                                        subtitle: Text(controller
-                                            .qualificacoes[index].descricao!),
-                                      );
-                                    },
-                                  ),
-                                );
+                                if (controller.avaliacoes.length > 0) {
+                                  return Container(
+                                    color: AppColors.background,
+                                    child: ListView.builder(
+                                      itemCount: controller.avaliacoes.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          title: StarRatingWidget(
+                                            rating: controller
+                                                .avaliacoes[index].nota!,
+                                          ),
+                                          subtitle: Text(controller
+                                              .avaliacoes[index].descricao!),
+                                          trailing: Text(
+                                            controller.formataData(controller
+                                                .avaliacoes[index].criado),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    height: double.maxFinite,
+                                    child: Center(
+                                      child: Text(
+                                        "Nenhuma avaliação para exibição.",
+                                        style: TextStyles.input,
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                             );
                           },

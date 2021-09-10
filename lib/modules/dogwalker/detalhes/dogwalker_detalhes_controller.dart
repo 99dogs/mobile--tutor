@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:tutor/repositories/avaliacao_repository.dart';
 import 'package:tutor/repositories/configuracao_horario_repository.dart';
 import 'package:tutor/repositories/qualificacao_repository.dart';
 import 'package:tutor/repositories/usuario_repository.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
+import 'package:tutor/shared/models/avaliacao_model.dart';
 import 'package:tutor/shared/models/configuracao_horario_model.dart';
 import 'package:tutor/shared/models/qualificacao_model.dart';
 import 'package:tutor/shared/models/usuario_logado_model.dart';
@@ -15,6 +17,7 @@ class DogwalkerDetalhesController {
   final usuarioRepository = UsuarioRepository();
   final configuracaoHorarioRepository = ConfiguracaoHorarioRepository();
   final qualificacaoRepository = QualificacaoRepository();
+  final avaliacaoRepository = AvaliacaoRepository();
 
   final state = ValueNotifier<StateEnum>(StateEnum.start);
   final errorException = ValueNotifier<String>("");
@@ -24,6 +27,7 @@ class DogwalkerDetalhesController {
   UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel();
   List<ConfiguracaoHorarioModel> horarios = [];
   List<QualificacaoModel> qualificacoes = [];
+  List<AvaliacaoModel> avaliacoes = [];
   int passeiosEfetuados = 0;
 
   formataData(
@@ -44,6 +48,7 @@ class DogwalkerDetalhesController {
       dogwalker = await usuarioRepository.buscarPorId(id);
       horarios = await configuracaoHorarioRepository.buscarPorDogwalker(id);
       qualificacoes = await qualificacaoRepository.buscarPorDogwalker(id);
+      avaliacoes = await avaliacaoRepository.buscarAvaliacoesPorDogwalker(id);
       passeiosEfetuados =
           await usuarioRepository.retornaQtdePasseiosEfetuados(id);
       state.value = StateEnum.success;
