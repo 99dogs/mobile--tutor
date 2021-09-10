@@ -8,6 +8,7 @@ import 'package:tutor/shared/themes/app_text_styles.dart';
 import 'package:tutor/shared/widgets/bottom_buttons/bottom_buttons_widget.dart';
 import 'package:tutor/shared/widgets/shimmer_input/shimmer_input_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
+import 'package:intl/intl.dart';
 
 class DetalhesPage extends StatefulWidget {
   final int id;
@@ -32,6 +33,14 @@ class _DetalhesPageState extends State<DetalhesPage> {
 
   start() async {
     await controller.buscarPorId(widget.id);
+  }
+
+  formatarData(_date) {
+    if (_date == null) return "";
+    var inputFormat = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    var inputDate = inputFormat.parse(_date);
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    return outputFormat.format(inputDate).toString();
   }
 
   @override
@@ -133,12 +142,15 @@ class _DetalhesPageState extends State<DetalhesPage> {
                                   style: TextStyles.input,
                                   children: [
                                     TextSpan(
-                                      text: controller
-                                                  .cachorro.dataNascimento !=
-                                              null
-                                          ? controller.cachorro.dataNascimento!
-                                              .toString()
-                                          : 'Não informado',
+                                      text:
+                                          controller.cachorro.dataNascimento !=
+                                                  null
+                                              ? formatarData(
+                                                  controller
+                                                      .cachorro.dataNascimento!
+                                                      .toString(),
+                                                ).toString()
+                                              : 'Não informado',
                                       style: TextStyles.buttonGray,
                                     ),
                                   ],

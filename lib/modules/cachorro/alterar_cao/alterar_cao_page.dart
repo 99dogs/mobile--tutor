@@ -121,7 +121,7 @@ class _AlterarCaoPageState extends State<AlterarCaoPage> {
                                       child: DateTimeField(
                                         initialValue:
                                             controller.cachorro.dataNascimento,
-                                        format: DateFormat("yyyy-MM-dd"),
+                                        format: DateFormat("dd-MM-yyyy"),
                                         onShowPicker: (context, currentValue) {
                                           return showDatePicker(
                                               context: context,
