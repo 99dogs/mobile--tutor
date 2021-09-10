@@ -302,8 +302,11 @@ class _DogwalkerDetalhesPageState extends State<DogwalkerDetalhesPage> {
                                             rating: controller
                                                 .avaliacoes[index].nota!,
                                           ),
-                                          subtitle: Text(controller
-                                              .avaliacoes[index].descricao!),
+                                          subtitle: Text(
+                                            controller.avaliacoes[index]
+                                                    .descricao ??
+                                                'Sem descrição',
+                                          ),
                                           trailing: Text(
                                             controller.formataData(controller
                                                 .avaliacoes[index].criado),

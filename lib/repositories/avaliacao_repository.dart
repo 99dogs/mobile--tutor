@@ -58,4 +58,55 @@ class AvaliacaoRepository {
       throw (e);
     }
   }
+
+  Future<AvaliacaoModel> buscarPorId(int id) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi + "/api/v1/avaliacao/passeio/$id",
+      );
+      var response = await _client.get(url, headers: await this.headers());
+
+      if (response.statusCode == 200) {
+        AvaliacaoModel avaliacao =
+            AvaliacaoModel.fromJson(jsonDecode(response.body));
+
+        return avaliacao;
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<String?> cadastrar(AvaliacaoModel avaliacao) async {
+    try {
+      var url = Uri.parse(
+        _endpointApi + "/api/v1/avaliacao",
+      );
+      var response = await _client.post(
+        url,
+        headers: await this.headers(),
+        body: jsonEncode(avaliacao),
+      );
+
+      if (response.statusCode == 200) {
+        return "";
+      } else if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 }

@@ -6,8 +6,10 @@ import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_controll
 import 'package:tutor/shared/enum/state_enum.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
+import 'package:tutor/shared/widgets/input_text/input_text_widget.dart';
 import 'package:tutor/shared/widgets/item_detail_list/item_detail_list_widget.dart';
 import 'package:tutor/shared/widgets/title_page_widget/title_page_widget.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class PasseioDetalhesPage extends StatefulWidget {
   final int id;
@@ -22,6 +24,7 @@ class PasseioDetalhesPage extends StatefulWidget {
 
 class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
   final controller = PasseioDetalhesController();
+  final notaInputController = TextEditingController();
 
   @override
   void initState() {
@@ -86,7 +89,7 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                   vertical: 20,
                                 ),
                                 child: Container(
-                                  height: size.height * 0.70,
+                                  height: size.height * 0.80,
                                   width: size.width * 0.9,
                                   decoration: BoxDecoration(
                                     color: AppColors.shape,
@@ -142,6 +145,12 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                           icon: FontAwesomeIcons.dog,
                                           label: "Cachorro(s)",
                                           info: controller.cachorros,
+                                        ),
+                                        ItemDetailWidget(
+                                          icon: Icons.star_outline_outlined,
+                                          label: "Avaliação",
+                                          info: controller.avaliacao.nota
+                                              .toString(),
                                         ),
                                         Visibility(
                                           visible: controller.passeio.status ==
@@ -270,6 +279,18 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
                                             ),
                                           ),
                                         ),
+                                        Visibility(
+                                          visible:
+                                              controller.avaliacao.id != null
+                                                  ? false
+                                                  : true &&
+                                                          controller.passeio
+                                                                  .status ==
+                                                              "Finalizado"
+                                                      ? true
+                                                      : false,
+                                          child: avaliarPasseio(),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -311,6 +332,108 @@ class _PasseioDetalhesPageState extends State<PasseioDetalhesPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget avaliarPasseio() {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.amber,
+            ),
+            icon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.stars_outlined,
+                size: 15,
+              ),
+            ),
+            label: Text("Avaliar o passeio"),
+            onPressed: () async {
+              Alert(
+                context: context,
+                title: "Avaliação do passeio\n",
+                content: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: <Widget>[
+                      InputTextWidget(
+                        label: "Nota de 0 a 5 *",
+                        icon: Icons.star_rate_outlined,
+                        controller: notaInputController,
+                        textInputType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Informe a nota.";
+                          } else {
+                            double nota = double.parse(value);
+                            if (nota < 0 || nota > 5) {
+                              return "A nota deve ser entre 0 e 5";
+                            }
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            controller.onChanged(
+                              nota: double.parse(value),
+                            );
+                          }
+                        },
+                      ),
+                      InputTextWidget(
+                        label: "O que achou?",
+                        icon: Icons.description_outlined,
+                        onChanged: (value) {
+                          controller.onChanged(descricao: value);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                buttons: [
+                  DialogButton(
+                    child: Text(
+                      "Avaliar",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    color: Colors.amber,
+                    onPressed: () async {
+                      String? response = await controller.avaliar();
+                      if (response != null) {
+                        // Navigator.of(context).pop();
+                        if (response.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(response),
+                            ),
+                          );
+                        } else {
+                          await CoolAlert.show(
+                            context: context,
+                            title: "Aaee!\n",
+                            text: "Avaliação feita com sucesso.",
+                            backgroundColor: AppColors.primary,
+                            type: CoolAlertType.success,
+                            confirmBtnText: "Fechar",
+                            confirmBtnColor: AppColors.shape,
+                            confirmBtnTextStyle: TextStyles.buttonGray,
+                            autoCloseDuration: Duration(milliseconds: 2700),
+                          );
+                          controller.init(widget.id);
+                        }
+                      }
+                    },
+                  ),
+                ],
+              ).show();
+            },
+          ),
+        ],
       ),
     );
   }
