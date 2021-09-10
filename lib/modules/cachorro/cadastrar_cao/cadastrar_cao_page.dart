@@ -110,7 +110,7 @@ class _CadastrarCaoPageState extends State<CadastrarCaoPage> {
                                     AnimatedCard(
                                       direction: AnimatedCardDirection.right,
                                       child: DateTimeField(
-                                        format: DateFormat("yyyy-MM-dd"),
+                                        format: DateFormat("dd-MM-yyyy"),
                                         onShowPicker: (context, currentValue) {
                                           return showDatePicker(
                                               context: context,
