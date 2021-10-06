@@ -101,6 +101,11 @@ class _DetalhesTicketPageState extends State<DetalhesTicketPage> {
                                 ItemDetailWidget(
                                   icon: FontAwesomeIcons.hashtag,
                                   label: "Identificação do ticket",
+                                  info: controller.ticket.id!.toString(),
+                                ),
+                                ItemDetailWidget(
+                                  icon: FontAwesomeIcons.hashtag,
+                                  label: "Identificação da fatura",
                                   info: controller.ticket.faturaId!,
                                 ),
                                 ItemDetailWidget(

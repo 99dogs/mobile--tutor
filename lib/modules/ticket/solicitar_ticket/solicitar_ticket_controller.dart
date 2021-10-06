@@ -28,8 +28,8 @@ class SolicitarTicketController {
   }) {
     ticket = ticket.copyWith(
       quantidade: quantidade,
-      unitario: 15.0,
-      total: 15.0,
+      unitario: 1,
+      total: quantidade == null ? 1 : quantidade * 1,
       formaDePagamentoId: formaDePagamentoId,
       cpfPagador: cpfPagador,
     );

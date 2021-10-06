@@ -41,7 +41,7 @@ class _TicketInfoWidgetState extends State<TicketInfoWidget> {
               style: TextStyles.captionBackground,
               children: [
                 TextSpan(
-                  text: '1x ${formatCurrency.format(15.00)}',
+                  text: '1x ${formatCurrency.format(1.00)}',
                   style: TextStyles.captionBoldBackground,
                 ),
               ],
