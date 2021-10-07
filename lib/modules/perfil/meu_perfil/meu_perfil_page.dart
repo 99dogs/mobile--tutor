@@ -70,171 +70,265 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 80,
-            color: AppColors.primary,
-          ),
-          Container(
-            color: AppColors.background,
-            child: Column(
-              children: [
-                TitlePageWidget(
-                  title: "Meu perfil",
-                ),
-                SizedBox(height: 15),
-                ValueListenableBuilder(
-                  valueListenable: controller.state,
-                  builder: (context, value, child) {
-                    MeuPerfilFormState state = value as MeuPerfilFormState;
-
-                    if (state == MeuPerfilFormState.loading) {
-                      return ShimmerPhotoWidget();
-                    } else {
-                      return FotoPerfil(
-                        id: controller.usuario.id!,
-                      );
-                    }
-                  },
-                ),
-                SizedBox(height: 30),
-              ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              height: 80,
+              color: AppColors.primary,
             ),
-          ),
-          ValueListenableBuilder(
-            valueListenable: controller.state,
-            builder: (context, value, child) {
-              MeuPerfilFormState state = value as MeuPerfilFormState;
-
-              if (state == MeuPerfilFormState.loading) {
-                return Expanded(
-                  child: Container(
-                    color: AppColors.background,
-                    child: ListView.builder(
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return ShimmerInputWidget();
-                      },
-                    ),
+            Container(
+              color: AppColors.background,
+              child: Column(
+                children: [
+                  TitlePageWidget(
+                    title: "Meu perfil",
                   ),
-                );
-              } else {
-                return Expanded(
-                  flex: 1,
-                  child: Container(
-                    color: AppColors.background,
-                    child: SingleChildScrollView(
-                      child: Container(
-                        color: AppColors.background,
-                        child: Form(
-                          key: controller.formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              InputTextWidget(
-                                label: "Nome",
-                                icon: Icons.face_outlined,
-                                controller: nomeInputTextController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo nome não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(nome: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "E-mail",
-                                icon: Icons.email_outlined,
-                                enable: false,
-                                controller: emailInputTextController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo e-mail não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(email: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "Telefone",
-                                icon: Icons.phone,
-                                controller: telefoneInputTextController,
-                                textInputType: TextInputType.number,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo telefone não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(telefone: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "Rua",
-                                icon: Icons.streetview_outlined,
-                                controller: ruaInputTextController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo rua não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(rua: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "Número",
-                                icon: Icons.label_important_outline,
-                                controller: numeroInputTextController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo número não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(numero: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "Bairro",
-                                icon: Icons.holiday_village_outlined,
-                                controller: bairroInputTextController,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo bairro não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(bairro: value);
-                                },
-                              ),
-                              InputTextWidget(
-                                label: "CEP",
-                                icon: Icons.location_city_outlined,
-                                controller: cepInputTextController,
-                                textInputType: TextInputType.number,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "O campo CEP não pode ser vazio.";
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  controller.onChange(cep: value);
-                                },
-                              ),
-                              ValueListenableBuilder(
+                  SizedBox(height: 15),
+                  ValueListenableBuilder(
+                    valueListenable: controller.state,
+                    builder: (context, value, child) {
+                      MeuPerfilFormState state = value as MeuPerfilFormState;
+
+                      if (state == MeuPerfilFormState.loading) {
+                        return ShimmerPhotoWidget();
+                      } else {
+                        return FotoPerfil(
+                          id: controller.usuario.id!,
+                        );
+                      }
+                    },
+                  ),
+                  SizedBox(height: 30),
+                ],
+              ),
+            ),
+            ValueListenableBuilder(
+              valueListenable: controller.state,
+              builder: (context, value, child) {
+                MeuPerfilFormState state = value as MeuPerfilFormState;
+
+                if (state == MeuPerfilFormState.loading) {
+                  return Expanded(
+                    child: Container(
+                      color: AppColors.background,
+                      child: ListView.builder(
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return ShimmerInputWidget();
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    flex: 1,
+                    child: Container(
+                      color: AppColors.background,
+                      child: SingleChildScrollView(
+                        child: Container(
+                          color: AppColors.background,
+                          child: Form(
+                            key: controller.formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                InputTextWidget(
+                                  label: "Nome",
+                                  icon: Icons.face_outlined,
+                                  controller: nomeInputTextController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo nome não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(nome: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "E-mail",
+                                  icon: Icons.email_outlined,
+                                  enable: false,
+                                  controller: emailInputTextController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo e-mail não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(email: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "Telefone",
+                                  icon: Icons.phone,
+                                  controller: telefoneInputTextController,
+                                  textInputType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo telefone não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(telefone: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "Rua",
+                                  icon: Icons.streetview_outlined,
+                                  controller: ruaInputTextController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo rua não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(rua: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "Número",
+                                  icon: Icons.label_important_outline,
+                                  controller: numeroInputTextController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo número não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(numero: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "Bairro",
+                                  icon: Icons.holiday_village_outlined,
+                                  controller: bairroInputTextController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo bairro não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(bairro: value);
+                                  },
+                                ),
+                                InputTextWidget(
+                                  label: "CEP",
+                                  icon: Icons.location_city_outlined,
+                                  controller: cepInputTextController,
+                                  textInputType: TextInputType.number,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "O campo CEP não pode ser vazio.";
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.onChange(cep: value);
+                                  },
+                                ),
+                                ValueListenableBuilder(
+                                    valueListenable:
+                                        controller.estadoIdAlterado,
+                                    builder: (context, value, child) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 16),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  child:
+                                                      DropdownButtonFormField(
+                                                    validator: (value) {
+                                                      EstadoModel estado =
+                                                          value as EstadoModel;
+                                                      if (estado.id == null) {
+                                                        return "O campo estado não pode ser vazio.";
+                                                      }
+                                                      return null;
+                                                    },
+                                                    value: controller
+                                                        .usuario.estado,
+                                                    isExpanded: true,
+                                                    iconSize: 30,
+                                                    style: TextStyle(
+                                                        color: Colors.blue),
+                                                    decoration: InputDecoration(
+                                                      contentPadding:
+                                                          EdgeInsets.zero,
+                                                      labelText: "Estado",
+                                                      labelStyle:
+                                                          TextStyles.buttonGray,
+                                                      icon: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                horizontal: 18,
+                                                              ),
+                                                              child: Icon(
+                                                                Icons.bookmark,
+                                                                color: AppColors
+                                                                    .primary,
+                                                              )),
+                                                          Container(
+                                                            width: 1,
+                                                            height: 48,
+                                                            color: AppColors
+                                                                .stroke,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      border: InputBorder.none,
+                                                    ),
+                                                    items: controller.estados
+                                                        .map((EstadoModel
+                                                            estado) {
+                                                      return DropdownMenuItem<
+                                                          EstadoModel>(
+                                                        value: estado,
+                                                        child:
+                                                            Text(estado.nome!),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (val) {
+                                                      EstadoModel estado =
+                                                          val as EstadoModel;
+                                                      controller.onChange(
+                                                          estado: estado);
+                                                      controller.buscarCidades(
+                                                          estado.id!);
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              thickness: 1,
+                                              color: AppColors.stroke,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                ValueListenableBuilder(
                                   valueListenable: controller.estadoIdAlterado,
                                   builder: (context, value, child) {
                                     return Padding(
@@ -249,15 +343,15 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                                               Expanded(
                                                 child: DropdownButtonFormField(
                                                   validator: (value) {
-                                                    EstadoModel estado =
-                                                        value as EstadoModel;
-                                                    if (estado.id == null) {
-                                                      return "O campo estado não pode ser vazio.";
+                                                    CidadeModel cidade =
+                                                        value as CidadeModel;
+                                                    if (cidade.id == null) {
+                                                      return "O campo cidade não pode ser vazio.";
                                                     }
                                                     return null;
                                                   },
                                                   value:
-                                                      controller.usuario.estado,
+                                                      controller.usuario.cidade,
                                                   isExpanded: true,
                                                   iconSize: 30,
                                                   style: TextStyle(
@@ -265,7 +359,7 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                                                   decoration: InputDecoration(
                                                     contentPadding:
                                                         EdgeInsets.zero,
-                                                    labelText: "Estado",
+                                                    labelText: "Cidade",
                                                     labelStyle:
                                                         TextStyles.buttonGray,
                                                     icon: Row(
@@ -293,21 +387,19 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                                                     ),
                                                     border: InputBorder.none,
                                                   ),
-                                                  items: controller.estados.map(
-                                                      (EstadoModel estado) {
+                                                  items: controller.cidades.map(
+                                                      (CidadeModel cidade) {
                                                     return DropdownMenuItem<
-                                                        EstadoModel>(
-                                                      value: estado,
-                                                      child: Text(estado.nome!),
+                                                        CidadeModel>(
+                                                      value: cidade,
+                                                      child: Text(cidade.nome!),
                                                     );
                                                   }).toList(),
                                                   onChanged: (val) {
-                                                    EstadoModel estado =
-                                                        val as EstadoModel;
+                                                    CidadeModel cidade =
+                                                        val as CidadeModel;
                                                     controller.onChange(
-                                                        estado: estado);
-                                                    controller.buscarCidades(
-                                                        estado.id!);
+                                                        cidade: cidade);
                                                   },
                                                 ),
                                               ),
@@ -321,131 +413,48 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                                         ],
                                       ),
                                     );
-                                  }),
-                              ValueListenableBuilder(
-                                valueListenable: controller.estadoIdAlterado,
-                                builder: (context, value, child) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: DropdownButtonFormField(
-                                                validator: (value) {
-                                                  CidadeModel cidade =
-                                                      value as CidadeModel;
-                                                  if (cidade.id == null) {
-                                                    return "O campo cidade não pode ser vazio.";
-                                                  }
-                                                  return null;
-                                                },
-                                                value:
-                                                    controller.usuario.cidade,
-                                                isExpanded: true,
-                                                iconSize: 30,
-                                                style: TextStyle(
-                                                    color: Colors.blue),
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  labelText: "Cidade",
-                                                  labelStyle:
-                                                      TextStyles.buttonGray,
-                                                  icon: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                            horizontal: 18,
-                                                          ),
-                                                          child: Icon(
-                                                            Icons.bookmark,
-                                                            color: AppColors
-                                                                .primary,
-                                                          )),
-                                                      Container(
-                                                        width: 1,
-                                                        height: 48,
-                                                        color: AppColors.stroke,
-                                                      )
-                                                    ],
-                                                  ),
-                                                  border: InputBorder.none,
-                                                ),
-                                                items: controller.cidades
-                                                    .map((CidadeModel cidade) {
-                                                  return DropdownMenuItem<
-                                                      CidadeModel>(
-                                                    value: cidade,
-                                                    child: Text(cidade.nome!),
-                                                  );
-                                                }).toList(),
-                                                onChanged: (val) {
-                                                  CidadeModel cidade =
-                                                      val as CidadeModel;
-                                                  controller.onChange(
-                                                      cidade: cidade);
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Divider(
-                                          height: 1,
-                                          thickness: 1,
-                                          color: AppColors.stroke,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomButtonsWidget(
+          primaryLabel: "Voltar",
+          primaryOnPressed: () {
+            homeController.mudarDePagina(homeController.paginaAtual.value);
+            Navigator.pushReplacementNamed(context, "/home");
+          },
+          secondaryLabel: "Alterar",
+          secondaryOnPressed: () async {
+            if (controller.formKey.currentState!.validate()) {
+              await controller.alterarMinhasInformacoes();
+
+              if (controller.errorException.value.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(controller.errorException.value),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Informações alteradas com sucesso."),
                   ),
                 );
               }
-            },
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomButtonsWidget(
-        primaryLabel: "Voltar",
-        primaryOnPressed: () {
-          homeController.mudarDePagina(homeController.paginaAtual.value);
-          Navigator.pushReplacementNamed(context, "/home");
-        },
-        secondaryLabel: "Alterar",
-        secondaryOnPressed: () async {
-          if (controller.formKey.currentState!.validate()) {
-            await controller.alterarMinhasInformacoes();
-
-            if (controller.errorException.value.isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(controller.errorException.value),
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Informações alteradas com sucesso."),
-                ),
-              );
             }
-          }
-        },
-        enableSecondaryColor: true,
+          },
+          enableSecondaryColor: true,
+        ),
       ),
     );
   }
