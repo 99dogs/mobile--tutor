@@ -100,6 +100,10 @@ class UsuarioRepository {
           throw ("Percebemos que você é um dog walker, este é um aplicativo dedicado para o tutor.");
         }
 
+        if (usuario.tipo == "ADMIN") {
+          throw ("Percebemos que você é um admin, este é um aplicativo dedicado para o tutor.");
+        }
+
         UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel(
           id: usuario.id,
           nome: usuario.nome,
@@ -233,6 +237,14 @@ class UsuarioRepository {
         _token = usuarioAutenticado.token;
 
         UsuarioModel usuario = await buscarMinhasInformacoes();
+
+        if (usuario.tipo == "DOGWALKER") {
+          throw ("Percebemos que você é um dog walker, este é um aplicativo dedicado para o tutor.");
+        }
+
+        if (usuario.tipo == "ADMIN") {
+          throw ("Percebemos que você é um admin, este é um aplicativo dedicado para o tutor.");
+        }
 
         UsuarioLogadoModel usuarioLogado = UsuarioLogadoModel(
           id: usuario.id,
