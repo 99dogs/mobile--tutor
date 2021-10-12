@@ -13,6 +13,7 @@ import 'package:tutor/modules/passeio/meus_passeios/meus_passeios_page.dart';
 import 'package:tutor/modules/passeio/passeio_detalhes/passeio_detalhes_page.dart';
 import 'package:tutor/modules/passeio/solicitar_passeio/solicitar_passeio_page.dart';
 import 'package:tutor/modules/perfil/meu_perfil/meu_perfil_page.dart';
+import 'package:tutor/modules/politica-de-dados-e-privacidade/politica_de_dados_e_privacidade_page.dart';
 import 'package:tutor/modules/register/register_page.dart';
 import 'package:tutor/modules/signin/signin_page.dart';
 import 'package:tutor/modules/ticket/detalhes/detalhes_ticket_page.dart';
@@ -68,6 +69,7 @@ class AppWdiget extends StatelessWidget {
         "/maps/detail": (context) => MapsWidget(
               id: ModalRoute.of(context)!.settings.arguments as int,
             ),
+        "/politica": (context) => PoliticaDeDadosEPrivacidadePage(),
       },
     );
   }
