@@ -90,6 +90,8 @@ class SolicitarPasseioController {
 
     if (form!.validate()) {
       try {
+        state.value = StateEnum.loading;
+
         solicitarPasseio = solicitarPasseio.copyWith(
           datahora: formataDataHora(datahora),
           dogwalkerId: dogwalker.id!,
@@ -100,8 +102,11 @@ class SolicitarPasseioController {
         novoPasseio = await passeioRepository.solicitar(solicitarPasseio);
 
         if (novoPasseio.id == null) {
+          state.value = StateEnum.success;
           throw ("Ocorreu um problema ao solicitar o passeio");
         }
+
+        state.value = StateEnum.success;
 
         return novoPasseio;
       } catch (e) {

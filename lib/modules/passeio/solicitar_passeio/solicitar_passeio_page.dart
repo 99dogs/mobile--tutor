@@ -192,8 +192,35 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                     onChanged: (value) async {
                                       if (value == null) return;
 
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return Dialog(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16),
+                                              child: new Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  new CircularProgressIndicator(),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10),
+                                                    child: new Text(
+                                                      "Verificando disponibilidade...",
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+
                                       bool disponivel = await controller
                                           .verificarDisponibilidade(value);
+
                                       if (disponivel == false) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -203,9 +230,13 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                             ),
                                           ),
                                         );
+
+                                        Navigator.pop(context);
+
                                         return;
                                       } else {
                                         controller.setDataHora = value;
+                                        Navigator.pop(context);
                                       }
                                     },
                                     validator: (datetime) {
