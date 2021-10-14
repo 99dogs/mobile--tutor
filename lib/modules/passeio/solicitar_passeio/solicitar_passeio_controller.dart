@@ -20,8 +20,7 @@ class SolicitarPasseioController {
   final passeioRepository = PasseioRepository();
 
   UsuarioModel dogwalker = UsuarioModel();
-  List<CachorroModel> _cachorros = [];
-  List<dynamic> listCachorros = [];
+  List<CachorroModel> cachorros = [];
   PasseioModel passeio = PasseioModel();
   SolicitarPasseioModel solicitarPasseio = SolicitarPasseioModel();
 
@@ -36,30 +35,33 @@ class SolicitarPasseioController {
     return outputFormat.format(inputDate).toString();
   }
 
-  void onChange({
-    DateTime? datahora,
-    int? dogwalkerId,
-    List<dynamic>? cachorrosIds,
-  }) {
-    passeio = passeio.copyWith(
-      datahora: datahora.toString(),
-      dogwalkerId: dogwalkerId,
-      cachorrosIds: cachorrosIds,
-    );
+  List<dynamic> _listCachorros = [];
+  int cachorroId = 0;
+  String? datahora;
+
+  int get getCachorroId {
+    return cachorroId;
+  }
+
+  void set setCachorroId(int value) {
+    cachorroId = value;
+    _listCachorros.clear();
+    _listCachorros.add(value);
+  }
+
+  String get getDatahora {
+    return datahora ?? "";
+  }
+
+  void set setDataHora(DateTime? value) {
+    datahora = value.toString();
   }
 
   Future init(int dogwalkerId) async {
     try {
       state.value = StateEnum.loading;
       dogwalker = await usuarioRepository.buscarPorId(dogwalkerId);
-      _cachorros = await cachorroRepository.buscarTodos();
-
-      for (var cachorro in _cachorros) {
-        listCachorros.add({
-          "id": cachorro.id,
-          "nome": cachorro.nome,
-        });
-      }
+      cachorros = await cachorroRepository.buscarTodos();
 
       state.value = StateEnum.success;
     } catch (e) {
@@ -72,7 +74,7 @@ class SolicitarPasseioController {
       String datahora = formataDataHora(datahoraSolicitada.toString());
       DisponibilidadeModel disponibilidade = DisponibilidadeModel(
         datahora: datahora,
-        usuarioId: passeio.dogwalkerId!,
+        usuarioId: dogwalker.id!,
       );
 
       bool disponivel =
@@ -89,9 +91,9 @@ class SolicitarPasseioController {
     if (form!.validate()) {
       try {
         solicitarPasseio = solicitarPasseio.copyWith(
-          datahora: formataDataHora(passeio.datahora),
-          dogwalkerId: passeio.dogwalkerId,
-          cachorrosIds: passeio.cachorrosIds,
+          datahora: formataDataHora(datahora),
+          dogwalkerId: dogwalker.id!,
+          cachorrosIds: _listCachorros,
         );
 
         PasseioModel novoPasseio = PasseioModel();

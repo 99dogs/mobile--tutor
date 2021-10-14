@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tutor/modules/home/home_controller.dart';
 import 'package:tutor/modules/passeio/solicitar_passeio/solicitar_passeio_controller.dart';
 import 'package:tutor/shared/enum/state_enum.dart';
+import 'package:tutor/shared/models/cachorro_model.dart';
 import 'package:tutor/shared/models/passeio_model.dart';
 import 'package:tutor/shared/themes/app_colors.dart';
 import 'package:tutor/shared/themes/app_text_styles.dart';
@@ -39,7 +40,6 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
 
   void start() async {
     await controller.init(widget.dogwalkerId);
-    controller.onChange(dogwalkerId: widget.dogwalkerId);
   }
 
   @override
@@ -104,31 +104,54 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                 ),
                                 AnimatedCard(
                                   direction: AnimatedCardDirection.right,
-                                  child: MultiSelectFormFieldWidget(
-                                    chipBackGroundColor: AppColors.secondary,
-                                    chipLabelStyle: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    dialogTextStyle: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    checkBoxActiveColor: AppColors.primary,
-                                    checkBoxCheckColor: Colors.white,
-                                    dialogShapeBorder: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0),
+                                  child: DropdownButtonFormField(
+                                    validator: (value) {
+                                      CachorroModel cachorro =
+                                          value as CachorroModel;
+                                      if (cachorro.id == null) {
+                                        return "Você deve selecionar um cão.";
+                                      }
+                                      return null;
+                                    },
+                                    isExpanded: true,
+                                    iconSize: 30,
+                                    style: TextStyle(color: Colors.blue),
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.zero,
+                                      labelText: "Qual cão irá passear?",
+                                      labelStyle: TextStyles.buttonGray,
+                                      icon: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 18,
+                                              ),
+                                              child: Icon(
+                                                FontAwesomeIcons.paw,
+                                                color: AppColors.primary,
+                                              )),
+                                          Container(
+                                            width: 1,
+                                            height: 48,
+                                            color: AppColors.stroke,
+                                          )
+                                        ],
                                       ),
+                                      border: InputBorder.none,
                                     ),
-                                    dataSource: controller.listCachorros,
-                                    title: "Quais dos seus cães irão passear?",
-                                    textField: 'nome',
-                                    valueField: 'id',
-                                    okButtonLabel: 'Adicionar',
-                                    cancelButtonLabel: 'Cancelar',
-                                    required: true,
-                                    onSaved: (value) {
-                                      if (value == null) return;
-                                      controller.onChange(cachorrosIds: value);
+                                    items: controller.cachorros
+                                        .map((CachorroModel cachorro) {
+                                      return DropdownMenuItem<CachorroModel>(
+                                        value: cachorro,
+                                        child: Text(cachorro.nome!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) {
+                                      CachorroModel cachorro =
+                                          val as CachorroModel;
+                                      controller.setCachorroId = cachorro.id!;
                                     },
                                   ),
                                 ),
@@ -182,7 +205,7 @@ class _SolicitarPasseioPageState extends State<SolicitarPasseioPage> {
                                         );
                                         return;
                                       } else {
-                                        controller.onChange(datahora: value);
+                                        controller.setDataHora = value;
                                       }
                                     },
                                     validator: (datetime) {
