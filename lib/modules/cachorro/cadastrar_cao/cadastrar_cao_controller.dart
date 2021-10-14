@@ -58,8 +58,13 @@ class CadastrarCaoController {
 
     if (form!.validate()) {
       try {
-        return await cachorroRepository.cadastrar(model);
+        state.value = StateEnum.loading;
+        String? response = await cachorroRepository.cadastrar(model);
+        state.value = StateEnum.success;
+
+        return response;
       } catch (e) {
+        state.value = StateEnum.success;
         return e.toString();
       }
     }
