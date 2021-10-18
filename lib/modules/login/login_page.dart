@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           alignment: AlignmentDirectional.center,
           children: [
             Positioned(
-              top: size.height * 0.13,
+              top: size.height * 0.15,
               child: Container(
                 width: size.width - 35,
                 decoration: BoxDecoration(
@@ -56,11 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           Image.asset(
-                            'assets/images/app-logo.png',
-                            width: 65,
+                            'assets/images/logo-black.png',
+                            width: 130,
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 30,
                           ),
                           Text(
                             "Informe suas credenciais para acessar sua conta",

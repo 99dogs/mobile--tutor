@@ -102,7 +102,6 @@ class SolicitarPasseioController {
         novoPasseio = await passeioRepository.solicitar(solicitarPasseio);
 
         if (novoPasseio.id == null) {
-          state.value = StateEnum.success;
           throw ("Ocorreu um problema ao solicitar o passeio");
         }
 
@@ -110,6 +109,7 @@ class SolicitarPasseioController {
 
         return novoPasseio;
       } catch (e) {
+        state.value = StateEnum.success;
         throw (e.toString());
       }
     }

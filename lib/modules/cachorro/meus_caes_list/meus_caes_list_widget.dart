@@ -93,7 +93,8 @@ class _MeusCaesListWidgetState extends State<MeusCaesListWidget> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),
                                     image: DecorationImage(
-                                      image: AssetImage(AppImages.logo),
+                                      image: AssetImage(
+                                          "assets/images/app-logo.png"),
                                     ),
                                   ),
                                 ),
