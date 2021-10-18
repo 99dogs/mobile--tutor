@@ -5,7 +5,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutor/shared/auth/auth_controller.dart';
+import 'package:tutor/shared/models/new_token_model.dart';
 import 'package:tutor/shared/models/response_data_model.dart';
 import 'package:tutor/shared/models/usuario_alterar_dados_model.dart';
 import 'package:tutor/shared/models/usuario_autenticado_model.dart';
@@ -334,5 +336,52 @@ class UsuarioRepository {
     } catch (e) {
       throw (e);
     }
+  }
+
+  Future<bool> atualizarTokenPushNotification() async {
+    try {
+      String tokenFirebase = "";
+      final instance = await SharedPreferences.getInstance();
+      if (instance.containsKey("token_firebase")) {
+        final token = instance.get("token_firebase") as String;
+        if (token.isNotEmpty) {
+          tokenFirebase = token;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+
+      UsuarioLogadoModel usuario = await _authController.obterSessao();
+
+      NewTokenModel newTokenModel = NewTokenModel(
+        token: tokenFirebase,
+        usuarioId: usuario.id,
+      );
+
+      var url = Uri.parse(
+          _endpointApi + "/api/v1/usuario/atualizar-token-push-notification");
+      var response = await _client.put(url,
+          headers: await this.headers(), body: jsonEncode(newTokenModel));
+
+      if (response.statusCode == 402 || response.statusCode == 502) {
+        throw ("Ocorreu um problema inesperado.");
+      } else if (response.statusCode != 200) {
+        ResponseDataModel responseData =
+            ResponseDataModel.fromJson(response.body);
+
+        throw (responseData.mensagem);
+      }
+      return true;
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future<bool> salvarTokenFirebase(String token) async {
+    final instance = await SharedPreferences.getInstance();
+    await instance.setString("token_firebase", token);
+    return true;
   }
 }
